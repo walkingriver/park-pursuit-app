@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <p class="hint" *ngIf="!isCordova">
+  <p class="hint" *ngIf="!isProduction">
     Location: {{myLoc.latitude}} {{myLoc.longitude}}
     <br /> Clue Location: {{gps.latitude}} {{gps.longitude}}
     <br /> Bearing: {{compassHeading()}}

@@ -8,6 +8,10 @@ import * as exif from 'exif-js';
 import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Plugins, GeolocationPosition } from '@capacitor/core';
+import { DmsService } from '../dms.service';
+
+const { Geolocation } = Plugins;
 
 @Component({
   selector: 'app-clue-detail',
@@ -17,7 +21,6 @@ import { Subscription } from 'rxjs';
 export class ClueDetailPage implements OnInit, OnDestroy {
   interval: number;
   devDistance: any;
-  isCordova: boolean;
   isFlipped: any;
   isFound: boolean;
   showHint: boolean = false;
@@ -27,6 +30,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
   myLoc: Coordinate = Coordinate.empty();
   sub: Subscription;
   parkCode = '';
+  isProduction = true;
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
@@ -41,7 +45,8 @@ export class ClueDetailPage implements OnInit, OnDestroy {
 
   async  ngOnInit() {
     await this.platform.ready();
-    this.isCordova = this.platform.is('cordova');
+
+    this.isProduction = environment.production;
 
     this.sub = this.activatedRoute.params.subscribe(async (p) => {
       this.parkCode = p.parkCode as string;
@@ -50,9 +55,9 @@ export class ClueDetailPage implements OnInit, OnDestroy {
     });
 
     console.log('Loaded: ', exif);
-    // this.getCurrentPosition();
+    this.getCurrentPosition();
 
-    if (!environment.production) {
+    if (!this.isProduction) {
       this.zone.run(() => {
         this.interval = window.setInterval(() => {
           this.devDistance = Math.floor(Math.random() * 7)
@@ -62,7 +67,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
   }
 
   async ngOnDestroy() {
-    if (!this.isCordova) { clearInterval(this.interval); }
+    if (!this.isProduction) { clearInterval(this.interval); }
     if (this.sub) { this.sub.unsubscribe(); }
   }
 
@@ -71,49 +76,49 @@ export class ClueDetailPage implements OnInit, OnDestroy {
   }
 
   async getCurrentPosition() {
-    // let resp: Geoposition;
-    // try {
-    //   resp = await this.geolocation.getCurrentPosition({ enableHighAccuracy: true, timeout: 60000 });
-    // }
-    // catch (e) {
-    //   console.error(e);
-    // }
+    let coordinates: GeolocationPosition;
+    try {
+      coordinates = await Geolocation.getCurrentPosition({ enableHighAccuracy: true, timeout: 60000 });
+    }
+    catch (e) {
+      console.error(e);
+    }
 
-    // if (resp) {
-    //   this.updatePosition(resp);
-    // } else {
-    //   if (window.navigator && window.navigator.geolocation) {
-    //     window.navigator.geolocation.getCurrentPosition(
-    //       position => {
-    //         this.myLoc.latitude = DmsService.convertToDms(position.coords.latitude, LocationType.Latitude);
-    //         this.myLoc.longitude = DmsService.convertToDms(position.coords.longitude, LocationType.Longitude);
-    //         console.log('Device Location: ', this.myLoc.latitude.toString(), this.myLoc.longitude.toString());
-    //         this.isLocated = true;
-    //       },
-    //       error => {
-    //         switch (error.code) {
-    //           case 1:
-    //             console.log('Permission Denied');
-    //             break;
-    //           case 2:
-    //             console.log('Position Unavailable');
-    //             break;
-    //           case 3:
-    //             console.log('Timeout');
-    //             break;
-    //         }
-    //       });
-    //   }
-    // }
+    if (coordinates) {
+      this.updatePosition(coordinates);
+    } else {
+      if (window.navigator && window.navigator.geolocation) {
+        window.navigator.geolocation.getCurrentPosition(
+          position => {
+            this.myLoc.latitude = DmsService.convertToDms(position.coords.latitude, LocationType.Latitude);
+            this.myLoc.longitude = DmsService.convertToDms(position.coords.longitude, LocationType.Longitude);
+            console.log('Device Location: ', this.myLoc.latitude.toString(), this.myLoc.longitude.toString());
+            this.isLocated = true;
+          },
+          error => {
+            switch (error.code) {
+              case 1:
+                console.log('Permission Denied');
+                break;
+              case 2:
+                console.log('Position Unavailable');
+                break;
+              case 3:
+                console.log('Timeout');
+                break;
+            }
+          });
+      }
+    }
   }
 
-  // updatePosition(position: Geoposition) {
-  //   var lat = DmsService.convertToDms(position.coords.latitude, LocationType.Latitude);
-  //   var long = DmsService.convertToDms(position.coords.longitude, LocationType.Longitude);
-  //   this.myLoc = new Coordinate(lat, long);
-  //   console.log('Device Location: ', this.myLoc.latitude.toString(), this.myLoc.longitude.toString());
-  //   this.isLocated = true;
-  // }
+  updatePosition(position: GeolocationPosition) {
+    var lat = DmsService.convertToDms(position.coords.latitude, LocationType.Latitude);
+    var long = DmsService.convertToDms(position.coords.longitude, LocationType.Longitude);
+    this.myLoc = new Coordinate(lat, long);
+    console.log('Device Location: ', this.myLoc.latitude.toString(), this.myLoc.longitude.toString());
+    this.isLocated = true;
+  }
 
   getGpsData(image): any {
     return new Promise((resolve, reject) => {
@@ -230,7 +235,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
   msgNumberFromDistance(distance) {
     let msg = 0;
 
-    if (this.isCordova) {
+    if (this.isProduction) {
       if (distance > 50) msg = 1;
       if (distance > 100) msg = 2;
       if (distance > 200) msg = 3;
@@ -265,7 +270,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
 
     if (this.isLocated) {
       const distance = this.distance();
-      if (distance < 25 || !this.isCordova) {
+      if (distance < 25 || !this.isProduction) {
         this.isFound = true;
         let toast = await this.toastCtrl.create({
           duration: 3000,
