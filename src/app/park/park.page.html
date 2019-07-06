@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{park?.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [class]="park.code">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let clue of clues">
+        <div class="polaroid">
+          <a [routerLink]="[ '/clue', park.code, clue.filename ]" routerDirection="forward">
+            <img [src]="clueService.urlFromClue(clue)" class="polaroid">
+            <p><span *ngIf="clue.isFound">Found {{clue.dateFound | date: 'mediumDate' }}</span></p>
+          </a>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>Clues: {{clues.length}} / Found: {{foundClues().length}}</ion-title>
+  </ion-toolbar>
+</ion-footer>

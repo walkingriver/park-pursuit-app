@@ -4,3 +4,54 @@
 // styles are for the entire app and not just one component. Additionally, this 
 // file can hold Sass mixins, functions, and placeholder classes to be imported 
 // and used throughout the application.
+
+ion-content {
+  --background: transparent;
+  background-size: cover;
+  background-image: url(/assets/images/splash-pencil.jpg);
+  p {
+    margin-bottom: 15px !important;
+    margin-top: 5px !important;
+  }
+}
+
+ion-content.mk {
+  background-image: url(/assets/images/mk-bg.jpg);
+  --background: #1994d7;
+}
+
+ion-content.ec {
+  background-image: url(/assets/images/ec-bg.jpg);
+  --background: #d0662c;
+}
+
+ion-content.st {
+  background-image: url(/assets/images/st-bg.jpg);
+  --background: #6f46ad;
+}
+
+ion-content.ak {
+  background-image: url(/assets/images/ak-bg.jpg);
+  --background: #628d25;
+}
+
+ion-content.byu {
+  background-image: url(/assets/images/byu-bg.jpg)
+}
+
+.polaroid {
+  img {
+    border: 10px solid #fff;
+    border-bottom: 35px solid #fff;
+    -webkit-box-shadow: 3px 3px 3px #777;
+    -moz-box-shadow: 3px 3px 3px #777;
+    box-shadow: 3px 3px 3px #777;
+  }
+  p {
+    position: absolute;
+    text-align: center;
+    width: 90%;
+    bottom: 0;
+    color: #888;
+  }
+}

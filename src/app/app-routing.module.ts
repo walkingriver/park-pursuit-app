@@ -11,10 +11,14 @@ const routes: Routes = [
     path: 'home',
     loadChildren: './home/home.module#HomePageModule'
   },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  }
+  { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
+  { path: 'clue/:parkCode/:clueId', loadChildren: './clue-detail/clue-detail.module#ClueDetailPageModule' },
+  { path: 'park/:parkCode', loadChildren: './park/park.module#ParkPageModule' },
+  { path: 'hint', loadChildren: './hint/hint.module#HintPageModule' },
+  { path: 'instructions', loadChildren: './instructions/instructions.module#InstructionsPageModule' },
+  { path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyPageModule' },
+  { path: 'progress', loadChildren: './progress/progress.module#ProgressPageModule' },
+  { path: 'terms', loadChildren: './terms/terms.module#TermsPageModule' }
 ];
 
 @NgModule({
