@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Games in Progress</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+      <ion-item-sliding *ngFor="let game of gameValues()">
+        <ion-item (click)="playGame(game)">
+          <ion-thumbnail item-start>
+            <img [src]="parkImage(game.park)" />
+          </ion-thumbnail>
+          <h2>{{parkName(game.park)}}</h2>
+          <h3>Clues Found: {{game.foundClues}} of {{totalClues(game)}}</h3>
+          <h4>Last Played: {{game.lastPlayed | date : "short"}}</h4>
+          <!-- <button ion-button clear item-end><ion-icon name="play"></ion-icon></button> -->
+          <button ion-button clear item-end (click)="playGame(game)">Play</button>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)=deleteGame(game)>
+            <ion-icon name="cancel"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  
+    <ion-card *ngIf="noGames()">
+      <ion-card-content>
+        <h2 text-center>You have no games in progress.</h2>
+        <h2>&nbsp;</h2>
+        <h1 text-center>Start one now?</h1>
+        <h2>&nbsp;</h2>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+            </ion-col>
+            <ion-col>
+              <button ion-button block color="secondary" (click)="newGame()">
+                Go
+              </button>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  
+  </ion-content>

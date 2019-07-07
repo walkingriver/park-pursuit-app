@@ -10,11 +10,13 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent {
   public appPages = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
+    // {
+    //   title: 'Home',
+    //   url: '/home',
+    //   icon: 'home'
+    // },
+    { title: 'New Game', url: '/new-game', icon: 'walk' },
+    { title: 'Load Game', url: '/games', icon: 'folder-open' },
     { title: 'Instructions', url: '/instructions', icon: 'paper' },
     { title: 'Progress', url: '/progress', icon: 'ribbon' },
     { title: 'About Park Pursuit', url: '/about', icon: 'information-circle-outline' },

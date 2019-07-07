@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>New Game</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="new-game">
+    <ion-list>
+      <ion-list-header>
+        Select your options
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Include previously found clues</ion-label>
+        <ion-toggle [(ngModel)]="includeFound"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Clues</ion-label>
+        <ion-select [selectedText]="clues" [(ngModel)]="clues">
+          <ion-select-option value="5">5</ion-select-option>
+          <ion-select-option value="10">10</ion-select-option>
+          <ion-select-option value="15">15</ion-select-option>
+          <ion-select-option value="20">20</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-list-header>
+        Select a park to begin
+      </ion-list-header>
+      <ion-item *ngFor="let park of parks" (click)="newGame(park)">
+          <ion-thumbnail slot="start">
+            <img [src]="park.imgSrc" />
+          </ion-thumbnail>
+          <ion-label>{{park.name}}</ion-label>
+          <ion-note slot="end">Unfound: {{unfoundClues(park)}}</ion-note>
+          <!-- <ion-button clear item-end><ion-icon name="play"></ion-icon></ion-button> -->
+          <!-- <ion-button fill="clear" slot="end" (click)="newGame(park)">Play</ion-button> -->
+      </ion-item>
+    </ion-list>
+  </ion-content>

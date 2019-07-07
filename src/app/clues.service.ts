@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import * as _ from 'lodash';
-import uuid from 'uuid/v1';
 import { Park } from './models/park';
 import { Clue } from './models/clue';
 
@@ -9,13 +8,10 @@ import { Clue } from './models/clue';
   providedIn: 'root'
 })
 export class CluesService {
+  private allParks: Park[];
 
   constructor(private storage: Storage) {
-
-  }
-
-  getParks(): Promise<Park[]> {
-    return Promise.resolve([
+    this.allParks = [
       { code: 'mk', name: 'Magic Kingdom', imgSrc: this.imgFromPark('mk'), disabled: false },
       { code: 'ec', name: 'Epcot', imgSrc: this.imgFromPark('ec') },
       { code: 'st', name: 'Hollywood Studios', imgSrc: this.imgFromPark('st'), disabled: false },
@@ -24,7 +20,16 @@ export class CluesService {
       // { code: 'ioa', name: 'Islands of Adventure', imgSrc: this.imgFromPark('ioa')},
       // { code: 'byu', name: 'BYU Provo', imgSrc: this.imgFromPark('byu')},
       // { code: 'cfl', name: 'Celebration FL', imgSrc: this.imgFromPark('cfl')},
-    ]);
+    ];
+  }
+
+  getParks(): Promise<Park[]> {
+    return Promise.resolve(this.allParks);
+  }
+
+
+  getPark(parkId: string): Promise<Park> {
+    return Promise.resolve(this.allParks.find((v) => v.code == parkId));
   }
 
   async getByPark(park: Park): Promise<Clue[]> {
@@ -58,7 +63,8 @@ export class CluesService {
 
     console.log(storageClues);
 
-    let allClues = _.unionWith(storageClues, this.getStaticClues(), (staticClue, savedClue) => {
+    const staticClues = this.getStaticClues();
+    const allClues = _.unionWith(storageClues, staticClues, (staticClue, savedClue) => {
       return (staticClue.parkCode === savedClue.parkCode && staticClue.filename === savedClue.filename)
     });
 

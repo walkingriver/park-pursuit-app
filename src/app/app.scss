@@ -39,6 +39,11 @@ ion-content.byu {
   background-image: url(/assets/images/byu-bg.jpg)
 }
 
+ion-content.new-game, ion-content.menu {
+  background-image: none;
+  --background: #fcfcfc;
+}
+
 .polaroid {
   img {
     border: 10px solid #fff;

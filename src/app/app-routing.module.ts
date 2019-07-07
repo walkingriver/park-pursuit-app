@@ -13,12 +13,14 @@ const routes: Routes = [
   },
   { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
   { path: 'clue/:parkCode/:clueId', loadChildren: './clue-detail/clue-detail.module#ClueDetailPageModule' },
-  { path: 'park/:parkCode', loadChildren: './park/park.module#ParkPageModule' },
+  { path: 'park/:gameId', loadChildren: './park/park.module#ParkPageModule' },
   { path: 'hint', loadChildren: './hint/hint.module#HintPageModule' },
   { path: 'instructions', loadChildren: './instructions/instructions.module#InstructionsPageModule' },
   { path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyPageModule' },
   { path: 'progress', loadChildren: './progress/progress.module#ProgressPageModule' },
-  { path: 'terms', loadChildren: './terms/terms.module#TermsPageModule' }
+  { path: 'terms', loadChildren: './terms/terms.module#TermsPageModule' },
+  { path: 'games', loadChildren: './games/games.module#GamesPageModule' },
+  { path: 'new-game', loadChildren: './new-game/new-game.module#NewGamePageModule' }
 ];
 
 @NgModule({
