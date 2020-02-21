@@ -12,7 +12,7 @@ import { GameService } from '../game.service';
   styleUrls: ['./games.page.scss'],
 })
 export class GamesPage implements OnInit {
-  games: Map<string, Game>;
+  games: Game[];
   parks: Park[];
 
   constructor(
@@ -26,17 +26,6 @@ export class GamesPage implements OnInit {
   async ngOnInit() {
     this.games = await this.gameService.loadAll();
     this.parks = await this.clueService.getParks();
-  }
-
-  gameValues(): Array<Game> {
-    if (this.games) {
-      return Array.from(this.games.values())
-        .sort( (a,b) => {
-          return b.lastPlayed < a.lastPlayed ? -1 : 1;
-        });
-    }
-
-    return [];
   }
 
   totalClues(game: Game): number {
@@ -56,17 +45,21 @@ export class GamesPage implements OnInit {
   //   return 0;
   // }
 
-  parkName(id) {
-    const park = this.park(id);
+  parkName(game: Game) {
+    if (! game) {return ''};
+    
+    const park = this.park(game.park);
     if (park) {
       return park.name;
     }
-
+    
     return 'Unknown Park';
   }
-
-  parkImage(id) {
-    const park = this.park(id);
+  
+  parkImage(game: Game) {
+    if (! game) {return ''};
+  
+    const park = this.park(game.park);
     if (park) {
       return park.imgSrc;
     }
@@ -83,19 +76,13 @@ export class GamesPage implements OnInit {
     }
   }
 
-  playGame(game: Game) {
-    this.navCtrl.navigateByUrl(`/park/${game.id}`);
-  }
-
   noGames() {
-    return this.games ? ! this.games.size : 1;
-  }
-
-  newGame() {
-    this.navCtrl.navigateByUrl('/new-game');
+    return !(this.games && this.games.length);
   }
 
   async deleteGame(game: Game) {
+    let updatedGames: Game[];   // NEW CODE
+
     let alert = await this.alertCtrl.create({
       header: 'Confirm delete',
       message: 'Are you really sure you want to delete this game? This cannot be undone.',
@@ -109,15 +96,16 @@ export class GamesPage implements OnInit {
         },
         {
           text: 'Delete',
-          handler: () => {
+          handler: async () => {
             console.log('Delete clicked');
-            this.gameService.delete(game.id)
-              .then(v => this.games = v);
+            updatedGames = await this.gameService.delete(game.id); // CHANGE
           }
         }
       ]
     });
 
-    alert.present();
+    await alert.present();  // CHANGED
+    await alert.onDidDismiss(); // NEW CODE
+    this.games = updatedGames || this.games; // NEW CODE
   }
 }

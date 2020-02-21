@@ -18,7 +18,7 @@ import { IonicStorageModule } from '@ionic/storage';
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicStorageModule.forRoot({
-      name: 'park-pursuit'
+      name: 'park-pursuit', driverOrder: ['indexeddb', 'websql']
     })  ],
   providers: [
     StatusBar,

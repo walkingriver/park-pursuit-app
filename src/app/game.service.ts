@@ -4,6 +4,8 @@ import { CluesService } from './clues.service';
 import { Game } from './models/game';
 import { Clue } from './models/clue';
 
+const GAMEPREFIX = 'pp-game';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,19 +14,17 @@ export class GameService {
   }
 
   async save(game: Game): Promise<Game> {
+    const dbKey = `${GAMEPREFIX}-${game.id}`;
     game.lastPlayed = new Date();
-    const existingGames = await this.loadAll();
-
-    const allGames = existingGames.set(game.id, game);
-    await this.storage.set('park-games', allGames);
+    await this.storage.set(dbKey, game);
     console.log('Saving Game saved', JSON.stringify(game));
     return game;
   }
 
   async load(gameId): Promise<Game> {
     console.log('Loading Game', JSON.stringify(gameId));
-    const existingGames = await this.loadAll();
-    let game = existingGames.get(gameId);
+    const dbKey = `${GAMEPREFIX}-${gameId}`;
+    let game = await this.storage.get(dbKey);
     game.lastPlayed = new Date();
     const clues = await this.updateClues(game.clueList);
     game.clueList = clues
@@ -37,13 +37,18 @@ export class GameService {
     return game;
   }
 
-  async loadAll(): Promise<Map<string, Game>> {
-    const allGames = await this.storage.get('park-games') || {};
-    const result = allGames.size ? allGames : new Map<String, Game>();
-    return result;
+  async loadAll(): Promise<Game[]> {
+    let games: Game[] = [];
+    await this.storage.forEach((v, k) => {
+      if (k.startsWith(GAMEPREFIX)) {
+        games.push(v);
+      }
+    });
+
+    return games;
   }
 
-  updateClues(clues: Clue[]): Promise<Clue[]> {
+  private updateClues(clues: Clue[]): Promise<Clue[]> {
     let updatedClues: Promise<Clue>[];
     if (clues) {
       updatedClues = clues.map(c => this.clueService.getClue(c.parkCode, c.filename));
@@ -51,10 +56,10 @@ export class GameService {
     return Promise.all(updatedClues);
   }
 
-  async delete(gameId): Promise<Map<string, Game>> {
+  async delete(gameId) {
     console.log('Deleting Game', gameId);
-    const allGames = await this.loadAll();
-    allGames.delete(gameId);
-    await this.storage.set('park-games', allGames);
-    return allGames;
-  }}
+    const dbKey = `${GAMEPREFIX}-${gameId}`;
+    this.storage.remove(dbKey);
+    return this.loadAll();
+  }
+}
