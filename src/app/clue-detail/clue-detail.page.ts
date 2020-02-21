@@ -277,7 +277,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
           message: 'Congratulations - We will check this off the list.',
           position: 'middle',
           buttons: [
-            { role: 'cancel' }
+            { text: 'Close', role: 'cancel' }
           ]
         });
 
@@ -293,7 +293,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
           message: messages[msg],
           position: 'middle',
           buttons: [
-            { role: 'cancel' }
+            { text: 'Close', role: 'cancel' }
           ]
         });
 
