@@ -276,7 +276,9 @@ export class ClueDetailPage implements OnInit, OnDestroy {
           duration: 3000,
           message: 'Congratulations - We will check this off the list.',
           position: 'middle',
-          showCloseButton: true
+          buttons: [
+            { role: 'cancel' }
+          ]
         });
 
         await toast.present();
@@ -290,7 +292,9 @@ export class ClueDetailPage implements OnInit, OnDestroy {
           duration: 3000,
           message: messages[msg],
           position: 'middle',
-          showCloseButton: true
+          buttons: [
+            { role: 'cancel' }
+          ]
         });
 
         toast.present();

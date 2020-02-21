@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+
 
 @Component({
   selector: 'app-root',
@@ -17,7 +16,7 @@ export class AppComponent {
     // },
     { title: 'New Game', url: '/new-game', icon: 'walk' },
     { title: 'Load Game', url: '/games', icon: 'folder-open' },
-    { title: 'Instructions', url: '/instructions', icon: 'paper' },
+    { title: 'Instructions', url: '/instructions', icon: 'newspaper' },
     { title: 'Progress', url: '/progress', icon: 'ribbon' },
     { title: 'About Park Pursuit', url: '/about', icon: 'information-circle-outline' },
     { title: 'Privacy Policy', url: '/privacy', icon: 'eye' },
@@ -27,16 +26,16 @@ export class AppComponent {
 
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    // private splashScreen: SplashScreen,
+    // private statusBar: StatusBar
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      // this.statusBar.styleDefault();
+      // this.splashScreen.hide();
     });
   }
 }
