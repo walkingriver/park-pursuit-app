@@ -9,18 +9,18 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
-  { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
-  { path: 'clue/:parkCode/:clueId', loadChildren: './clue-detail/clue-detail.module#ClueDetailPageModule' },
-  { path: 'park/:gameId', loadChildren: './park/park.module#ParkPageModule' },
-  { path: 'hint', loadChildren: './hint/hint.module#HintPageModule' },
-  { path: 'instructions', loadChildren: './instructions/instructions.module#InstructionsPageModule' },
-  { path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyPageModule' },
-  { path: 'progress', loadChildren: './progress/progress.module#ProgressPageModule' },
-  { path: 'terms', loadChildren: './terms/terms.module#TermsPageModule' },
-  { path: 'games', loadChildren: './games/games.module#GamesPageModule' },
-  { path: 'new-game', loadChildren: './new-game/new-game.module#NewGamePageModule' }
+  { path: 'about', loadChildren: () => import('./about/about.module').then(m => m.AboutPageModule) },
+  { path: 'clue/:parkCode/:clueId', loadChildren: () => import('./clue-detail/clue-detail.module').then(m => m.ClueDetailPageModule) },
+  { path: 'park/:gameId', loadChildren: () => import('./park/park.module').then(m => m.ParkPageModule) },
+  { path: 'hint', loadChildren: () => import('./hint/hint.module').then(m => m.HintPageModule) },
+  { path: 'instructions', loadChildren: () => import('./instructions/instructions.module').then(m => m.InstructionsPageModule) },
+  { path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyPageModule) },
+  { path: 'progress', loadChildren: () => import('./progress/progress.module').then(m => m.ProgressPageModule) },
+  { path: 'terms', loadChildren: () => import('./terms/terms.module').then(m => m.TermsPageModule) },
+  { path: 'games', loadChildren: () => import('./games/games.module').then(m => m.GamesPageModule) },
+  { path: 'new-game', loadChildren: () => import('./new-game/new-game.module').then(m => m.NewGamePageModule) }
 ];
 
 @NgModule({
