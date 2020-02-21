@@ -3,33 +3,33 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Games in Progress</ion-title>
+    <ion-title>Saved Games</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- <ion-list>
+  <ion-list>
     <ion-item-sliding *ngFor="let game of games">
-      <ion-item (click)="playGame(game)">
-        <ion-thumbnail item-start>
-          <img [src]="parkImage(game)" />
-        </ion-thumbnail>
-        <ion-label>{{parkName(game)}}</ion-label>
-        <ion-label>Clues Found: {{game.foundClues}} of {{totalClues(game)}}</ion-label>
-        <ion-label>Last Played: {{game.lastPlayed | date : "short"}}</ion-label>
-        <ion-button file="clear" slot="end" (click)="playGame(game)">Play</ion-button>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-button color="danger" (click)=deleteGame(game)>
-          <ion-icon name="home"></ion-icon>
-          Delete
-        </ion-button>
-      </ion-item-options>
+        <ion-item [routerLink]="['/park/', game.id]" routerDirection="root">
+          <ion-thumbnail slot="start">
+            <img [src]="parkImage(game)" />
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap">{{parkName(game)}}<br />
+            <!-- <ion-button file="clear" slot="end" (click)="playGame(game)">Play</ion-button> -->
+            Clues Found: {{game.foundClues}} of {{totalClues(game)}}<br />
+            Last Played: {{game.lastPlayed | date : "short"}}</ion-label>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)=deleteGame(game)>
+            <!-- <ion-icon name="home"></ion-icon> -->
+            Delete
+          </ion-item-option>
+        </ion-item-options>
     </ion-item-sliding>
-  </ion-list> -->
+  </ion-list>
 
-  <ion-card *ngFor="let game of games">
-    <!-- <div class="park" [ngClass]="game.park"></div> -->
+  <!-- <ion-card *ngFor="let game of games">
+    <div class="park" [ngClass]="game.park"></div>
     <ion-card-header>
       <ion-card-title>
         <ion-thumbnail class="cover" [ngClass]="game.park"></ion-thumbnail>
@@ -39,7 +39,7 @@
         Last Played: {{game.lastPlayed | date : "short"}}
       </ion-card-subtitle>
     </ion-card-header>
-    <ion-card-content>
+    <ion-footer>
       <ion-toolbar>
           Clues Found: {{game.foundClues}} of {{totalClues(game)}}
         <ion-buttons slot="end">
@@ -49,8 +49,8 @@
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
-    </ion-card-content>
-  </ion-card>
+    </ion-footer>
+  </ion-card> -->
 
   <ion-card *ngIf="noGames()">
     <ion-card-title>

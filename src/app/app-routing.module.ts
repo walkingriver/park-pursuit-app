@@ -4,12 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'games',
     pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   { path: 'about', loadChildren: () => import('./about/about.module').then(m => m.AboutPageModule) },
   { path: 'clue/:parkCode/:clueId', loadChildren: () => import('./clue-detail/clue-detail.module').then(m => m.ClueDetailPageModule) },

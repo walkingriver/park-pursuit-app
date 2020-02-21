@@ -2,7 +2,6 @@
   <ion-toolbar>
     <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
-        <ion-back-button defaultHref="/games"></ion-back-button>
     </ion-buttons>
     <ion-title>{{park?.name}}</ion-title>
   </ion-toolbar>
@@ -26,6 +25,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-title>Clues: {{clues.length}} / Found: {{foundClues().length}}</ion-title>
+    <ion-title>Found: {{foundClues().length}} of {{clues.length}}</ion-title>
   </ion-toolbar>
 </ion-footer>
