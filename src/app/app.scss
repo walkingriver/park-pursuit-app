@@ -6,9 +6,9 @@
 // and used throughout the application.
 
 ion-content {
-  --background: transparent;
-  background-size: cover;
-  background-image: url(/assets/images/splash-pencil.jpg);
+  --background: #fcfcfc;
+  // background-size: cover;
+  // background-image: url(/assets/images/splash-pencil.jpg);
   p {
     margin-bottom: 15px !important;
     margin-top: 5px !important;
@@ -16,27 +16,43 @@ ion-content {
 }
 
 ion-content.mk {
-  background-image: url(/assets/images/mk-bg.jpg);
+  // background-image: url(/assets/images/mk-bg.jpg);
   --background: #1994d7;
 }
 
 ion-content.ec {
-  background-image: url(/assets/images/ec-bg.jpg);
+  // background-image: url(/assets/images/ec-bg.jpg);
   --background: #d0662c;
 }
 
 ion-content.st {
-  background-image: url(/assets/images/st-bg.jpg);
+  // background-image: url(/assets/images/st-bg.jpg);
   --background: #6f46ad;
 }
 
 ion-content.ak {
-  background-image: url(/assets/images/ak-bg.jpg);
+  // background-image: url(/assets/images/ak-bg.jpg);
   --background: #628d25;
 }
 
 ion-content.byu {
-  background-image: url(/assets/images/byu-bg.jpg)
+  --background: #0062b8;
+  // background-image: url(/assets/images/byu-bg.jpg)
+}
+
+ion-content.cfl {
+  --background: #075948;
+  // background-image: url(/assets/images/byu-bg.jpg)
+}
+
+ion-content.uso {
+  --background: #0574f0;
+  // background-image: url(/assets/images/byu-bg.jpg)
+}
+
+ion-content.ioa {
+  --background: #3555a3;
+  // background-image: url(/assets/images/byu-bg.jpg)
 }
 
 ion-content.new-game, ion-content.menu {
