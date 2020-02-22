@@ -34,3 +34,35 @@ sips -z 1024 1024 --out $outDir/AppIcon-512@2x.png $file
 sips -z 1024 1024 -p 2732 2732 --padColor ffffff --out $splashDir/splash-2732x2732-1.png $file
 sips -z 1024 1024  -p 2732 2732 --padColor ffffff --out $splashDir/splash-2732x2732-2.png $file
 sips -z 1024 1024  -p 2732 2732 --padColor ffffff --out $splashDir/splash-2732x2732.png $file
+
+# Next make the Android splash screens from the 2732x2732 we made for iOS
+androidSplashDir="android/app/src/main/res"
+file="$splashDir/splash-2732x2732.png"
+[ -d $androidSplashDir ] || mkdir -p $androidSplashDir
+
+function resize {
+  w=$2
+  h=$3
+
+  echo $file into $4
+
+  [ -d "$androidSplashDir/$4" ] || mkdir $androidSplashDir/$4
+
+  if [[ $w -ge $h ]]; then
+    sips -Z $w -c $h $w --out $androidSplashDir/$4/splash.png $file
+  else
+    sips -Z $h -c $h $w --out $androidSplashDir/$4/splash.png $file
+  fi
+}
+
+resize $file 480 320 drawable
+resize $file 800 480 drawable-land-hdpi
+resize $file 480 320 drawable-land-mdpi
+resize $file 1280 720 drawable-land-xhdpi
+resize $file 1600 960 drawable-land-xxhdpi
+resize $file 1920 1280 drawable-land-xxxhdpi
+resize $file 480 800 drawable-port-hdpi
+resize $file 320 480 drawable-port-mdpi
+resize $file 720 1280 drawable-port-xhdpi
+resize $file 960 1600 drawable-port-xxhdpi
+resize $file 1280 1920 drawable-port-xxxhdpi
