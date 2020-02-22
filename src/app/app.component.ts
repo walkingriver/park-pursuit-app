@@ -26,7 +26,6 @@ export class AppComponent {
 
   async initializeApp() {
     await this.platform.ready();
-    // this.statusBar.styleDefault();
     SplashScreen.hide();
   }
 }
