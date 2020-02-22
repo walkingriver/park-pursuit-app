@@ -7,11 +7,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && cap sync",
+    "build:prod": "ionic build --prod && cap sync",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
+    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
+    "images": "./mk-images.sh"
   },
   "private": true,
   "dependencies": {
@@ -22,9 +24,7 @@
     "@angular/platform-browser-dynamic": "^9.0.2",
     "@angular/router": "^9.0.2",
     "@capacitor/core": "1.1.0",
-    "@ionic-native/core": "^5.21.5",
-    "@ionic-native/splash-screen": "^5.21.5",
-    "@ionic-native/status-bar": "^5.21.5",
+    "@capacitor/ios": "^1.5.0",
     "@ionic/angular": "^5.0.1",
     "@ionic/storage": "^2.2.0",
     "exif-js": "^2.3.0",
@@ -51,9 +51,10 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0",
+    "pwa-asset-generator": "^2.2.1",
     "ts-node": "~8.3.0",
     "tslint": "~5.17.0",
     "typescript": "~3.7.5"
   },
-  "description": "An Ionic project"
+  "description": "Park Pursuit uses your location to determine how close you are to a selected clue. It never stores or tracks your location."
 }

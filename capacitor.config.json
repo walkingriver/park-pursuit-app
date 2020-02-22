@@ -1,7 +1,12 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "park-pursuit",
+  "appId": "com.walkingriver.parkpursuit",
+  "appName": "Park Pursuit",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": { 
+      "showSpinner": true
+    }
+  }
 }
