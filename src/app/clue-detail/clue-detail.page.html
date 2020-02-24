@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [class]="parkCode" padding>
+<ion-content [class]="parkCode" class="ion-padding-top">
   <div class="container">
     <div class="card" [class.flipped]="isFlipped">
       <figure class="front">
@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <p class="hint" *ngIf="!isCordova">
+  <p class="hint" *ngIf="!isProduction">
     Location: {{myLoc.latitude}} {{myLoc.longitude}}
     <br /> Clue Location: {{gps.latitude}} {{gps.longitude}}
     <br /> Bearing: {{compassHeading()}}

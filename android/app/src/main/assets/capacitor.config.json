@@ -1,0 +1,12 @@
+{
+  "appId": "com.walkingriver.parkpursuit",
+  "appName": "Park Pursuit",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": { 
+      "showSpinner": true
+    }
+  }
+}

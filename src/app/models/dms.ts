@@ -1,4 +1,3 @@
-import { DmsService } from '../dms.service';
 
 export enum Direction {
   North, South, East, West
@@ -20,7 +19,7 @@ export class DMS {
   }
 
   asDecimal() {
-    return DmsService.convertToDecimal(this);
+    return DMS.convertToDecimal(this);
   }
 
   toRadians() {
@@ -51,5 +50,13 @@ export class DMS {
       case 'W':
         return Direction.West;
     }
+  }
+
+  static convertToDecimal(dms: DMS): number {
+    let result = dms.degrees + (dms.minutes / 60) + (dms.seconds / (60 * 60));
+    if (dms.direction === Direction.South || dms.direction === Direction.West) {
+      result = -result;
+    }
+    return result;
   }
 }

@@ -28,12 +28,4 @@ export class DmsService {
 
     return dms;
   }
-
-  static convertToDecimal(dms: DMS): number {
-    let result = dms.degrees + (dms.minutes / 60) + (dms.seconds / (60 * 60));
-    if (dms.direction === Direction.South || dms.direction === Direction.West) {
-      result = -result;
-    }
-    return result;
-  }
 }
