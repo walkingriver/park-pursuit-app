@@ -19,8 +19,7 @@
             <img [src]="parkImage(game)" />
           </ion-thumbnail>
           <ion-label class="ion-text-wrap">{{parkName(game)}}<br />
-            <!-- <ion-button file="clear" slot="end" (click)="playGame(game)">Play</ion-button> -->
-            Clues Found: {{game.foundClues}} of {{totalClues(game)}}<br />
+            <!-- Clues Found: {{game.foundClues}} of {{totalClues(game)}}<br /> -->
             Last Played: {{game.lastPlayed | date : "short"}}</ion-label>
         </ion-item>
         <ion-item-options side="end">

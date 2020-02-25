@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
+import { environment } from 'src/environments/environment';
+import { AdsService } from './ads.service';
 const { SplashScreen } = Plugins;
+const { AdMob } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -20,12 +23,16 @@ export class AppComponent {
     // { title: 'Try Bravo!', url: '/bravo' }
   ];
 
-  constructor(private platform: Platform) {
+  constructor(
+    private ads: AdsService,
+    private platform: Platform) {
     this.initializeApp();
   }
 
   async initializeApp() {
     await this.platform.ready();
+    await this.ads.initialize();
     SplashScreen.hide();
   }
+
 }

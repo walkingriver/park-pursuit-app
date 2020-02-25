@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Plugins, GeolocationPosition } from '@capacitor/core';
 import { DmsService } from '../dms.service';
+import { AdsService } from '../ads.service';
 
 const { Geolocation } = Plugins;
 
@@ -34,6 +35,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
+    private ads: AdsService,
     public clueService: CluesService,
     // private geolocation: Geolocation,
     public navCtrl: Router,
@@ -45,6 +47,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
 
   async  ngOnInit() {
     await this.platform.ready();
+    await this.ads.showAd();
 
     this.isProduction = environment.production;
 

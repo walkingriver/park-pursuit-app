@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CluesService } from '../clues.service';
 import { AlertController } from '@ionic/angular';
 import { GameService } from '../game.service';
+import { AdsService } from '../ads.service';
 
 @Component({
   selector: 'app-games',
@@ -16,6 +17,7 @@ export class GamesPage implements OnInit {
   parks: Park[];
 
   constructor(
+    private ads: AdsService,
     private alertCtrl: AlertController,
     private clueService: CluesService,
     private gameService: GameService,
@@ -24,6 +26,7 @@ export class GamesPage implements OnInit {
   }
 
   async ngOnInit() {
+    await this.ads.showAd();
     this.games = await this.gameService.loadAll();
     this.parks = await this.clueService.getParks();
   }
