@@ -1,14 +1,15 @@
 {
   "name": "park-pursuit",
   "displayName": "Park Pursuit",
-  "version": "20.02.21",
+  "version": "20.02.29",
   "author": "Michael Callaghan",
   "homepage": "https://walkingriver.com/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && cap sync",
-    "build:prod": "ionic build --prod && cap sync",
+    "build": "ng build",
+    "build:prod": "ionic build --prod",
+    "postbuild": "cap sync",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

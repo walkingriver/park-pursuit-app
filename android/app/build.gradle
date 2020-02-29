@@ -6,8 +6,8 @@ android {
         applicationId "com.walkingriver.parkpursuit"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "20.02.29"
+        versionCode 200230
+        versionName "20.02.30"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
