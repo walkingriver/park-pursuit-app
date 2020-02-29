@@ -373,7 +373,7 @@ export class CluesService {
       { parkCode: 'ak', filename: '7' },
       { parkCode: 'ak', filename: '8' },
       { parkCode: 'ak', filename: '9' },
-      { parkCode: 'ak', filename: '10' },
+      // { parkCode: 'ak', filename: '10' },
       { parkCode: 'ak', filename: '11' },
       { parkCode: 'ak', filename: '12' },
       { parkCode: 'ak', filename: '13' },

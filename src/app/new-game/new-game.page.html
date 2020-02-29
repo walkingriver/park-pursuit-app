@@ -29,7 +29,7 @@
       <ion-list-header>
         Select a park to begin
       </ion-list-header>
-      <ion-item *ngFor="let park of parks" (click)="newGame(park)">
+      <ion-item *ngFor="let park of parks" (click)="newGame(park)" id="new-{{park.code}}">
           <ion-thumbnail slot="start">
             <img [src]="park.imgSrc" />
           </ion-thumbnail>

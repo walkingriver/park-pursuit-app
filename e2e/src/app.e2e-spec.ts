@@ -1,4 +1,5 @@
 import { AppPage } from './app.po';
+import { browser } from 'protractor';
 
 describe('new App', () => {
   let page: AppPage;
@@ -11,9 +12,6 @@ describe('new App', () => {
       page.navigateTo('/games');
     });
     it('should have a title saying Saved Games', () => {
-      page.getPageOneTitleText().then(title => {
-        expect(title).toEqual('Saved Games');
-      });
     });
   });
   describe('New game', () => {
@@ -24,6 +22,16 @@ describe('new App', () => {
       page.getPageOneTitleText().then(title => {
         expect(title).toEqual('New Game');
       });
+    });
+    it('should be able to create a new DAK game', async () => {
+      await page.getElementByCss('#new-ak').click();
+      await browser.driver.sleep(500);
+      page.takeScreenshot('/dak');
+    });
+    it('should be able to create a new USO game', async () => {
+      await page.getElementByCss('#new-uso').click();
+      await browser.driver.sleep(500);
+      page.takeScreenshot('/uso');
     });
   });
   describe('DAK', () => {

@@ -39,4 +39,8 @@ export class AppPage {
   getPageOneTitleText() {
     return element(by.tagName('ion-app')).element(by.deepCss('ion-title')).getText();
   }  
+
+  getElementByCss(css: string) {
+    return element(by.deepCss(css));
+  }
 }
