@@ -8,8 +8,6 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:prod": "ionic build --configuration production",
-    "postbuild": "cap sync",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
