@@ -16,8 +16,19 @@
       }
     },
     {
-      "name": "assets",
+      "name": "clues",
       "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/clues/**",
+          "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ]
+      }
+    },
+    {
+      "name": "assets/images/**",
+      "installMode": "prefetch",
       "updateMode": "prefetch",
       "resources": {
         "files": [
