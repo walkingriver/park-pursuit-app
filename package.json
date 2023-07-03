@@ -1,7 +1,7 @@
 {
   "name": "park-pursuit",
   "displayName": "Park Pursuit",
-  "version": "21.08.10",
+  "version": "23.07.04",
   "author": "Michael Callaghan",
   "homepage": "https://walkingriver.com/",
   "scripts": {
@@ -27,12 +27,12 @@
     "@capacitor/android": "^1.5.2",
     "@capacitor/core": "^1.5.2",
     "@capacitor/ios": "^1.5.2",
-    "@ionic/angular": "^6.2.7",
+    "@ionic/angular": "^7.1.1",
     "@ionic/storage": "^2.3.1",
     "capacitor-admob": "^0.1.0",
     "exif-js": "^2.3.0",
     "lodash": "^4.17.15",
-    "rxjs": "~7.4.0",
+    "rxjs": "~7.8.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
   },

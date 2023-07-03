@@ -1,23 +1,26 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
-import { Clue } from '../models/clue';
-import { Coordinate } from '../models/coordinate';
-import { ActionSheetController, Platform, ToastController } from '@ionic/angular';
-import { LocationType, DMS } from '../models/dms';
-import { CluesService } from '../clues.service';
-import * as exif from 'exif-js';
-import { environment } from 'src/environments/environment';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Plugins, GeolocationPosition } from '@capacitor/core';
-import { DmsService } from '../dms.service';
-import { AdsService } from '../ads.service';
+import { Component, OnInit, NgZone, OnDestroy } from "@angular/core";
+import { Clue } from "../models/clue";
+import { Coordinate } from "../models/coordinate";
+import {
+  ActionSheetController,
+  Platform,
+  ToastController,
+} from "@ionic/angular";
+import { LocationType, DMS } from "../models/dms";
+import { CluesService } from "../clues.service";
+import * as exif from "exif-js";
+import { environment } from "src/environments/environment";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs";
+import { Plugins, GeolocationPosition } from "@capacitor/core";
+import { DmsService } from "../dms.service";
 
 const { Geolocation } = Plugins;
 
 @Component({
-  selector: 'app-clue-detail',
-  templateUrl: './clue-detail.page.html',
-  styleUrls: ['./clue-detail.page.scss'],
+  selector: "app-clue-detail",
+  templateUrl: "./clue-detail.page.html",
+  styleUrls: ["./clue-detail.page.scss"],
 })
 export class ClueDetailPage implements OnInit, OnDestroy {
   interval: number;
@@ -25,29 +28,27 @@ export class ClueDetailPage implements OnInit, OnDestroy {
   isFlipped: any;
   isFound: boolean;
   showHint: boolean = false;
-  clue: Clue = { parkCode: '', filename: '' };
+  clue: Clue = { parkCode: "", filename: "" };
   gps: Coordinate = Coordinate.empty();
   isLocated: boolean;
   myLoc: Coordinate = Coordinate.empty();
   sub: Subscription;
-  parkCode = '';
+  parkCode = "";
   isProduction = true;
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
-    private ads: AdsService,
     public clueService: CluesService,
     // private geolocation: Geolocation,
     public navCtrl: Router,
     private activatedRoute: ActivatedRoute,
     private platform: Platform,
     private toastCtrl: ToastController,
-    private zone: NgZone) {
-  }
+    private zone: NgZone
+  ) {}
 
-  async  ngOnInit() {
+  async ngOnInit() {
     await this.platform.ready();
-    await this.ads.showAd();
 
     this.isProduction = environment.production;
 
@@ -57,21 +58,25 @@ export class ClueDetailPage implements OnInit, OnDestroy {
       console.log(this.clue);
     });
 
-    console.log('Loaded: ', exif);
+    console.log("Loaded: ", exif);
     this.getCurrentPosition();
 
     if (!this.isProduction) {
       this.zone.run(() => {
         this.interval = window.setInterval(() => {
-          this.devDistance = Math.floor(Math.random() * 7)
+          this.devDistance = Math.floor(Math.random() * 7);
         }, 5000);
       });
     }
   }
 
   async ngOnDestroy() {
-    if (!this.isProduction) { clearInterval(this.interval); }
-    if (this.sub) { this.sub.unsubscribe(); }
+    if (!this.isProduction) {
+      clearInterval(this.interval);
+    }
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
   async loaded(e) {
@@ -81,9 +86,11 @@ export class ClueDetailPage implements OnInit, OnDestroy {
   async getCurrentPosition() {
     let coordinates: GeolocationPosition;
     try {
-      coordinates = await Geolocation.getCurrentPosition({ enableHighAccuracy: true, timeout: 60000 });
-    }
-    catch (e) {
+      coordinates = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 60000,
+      });
+    } catch (e) {
       console.error(e);
     }
 
@@ -92,34 +99,55 @@ export class ClueDetailPage implements OnInit, OnDestroy {
     } else {
       if (window.navigator && window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(
-          position => {
-            this.myLoc.latitude = DmsService.convertToDms(position.coords.latitude, LocationType.Latitude);
-            this.myLoc.longitude = DmsService.convertToDms(position.coords.longitude, LocationType.Longitude);
-            console.log('Device Location: ', this.myLoc.latitude.toString(), this.myLoc.longitude.toString());
+          (position) => {
+            this.myLoc.latitude = DmsService.convertToDms(
+              position.coords.latitude,
+              LocationType.Latitude
+            );
+            this.myLoc.longitude = DmsService.convertToDms(
+              position.coords.longitude,
+              LocationType.Longitude
+            );
+            console.log(
+              "Device Location: ",
+              this.myLoc.latitude.toString(),
+              this.myLoc.longitude.toString()
+            );
             this.isLocated = true;
           },
-          error => {
+          (error) => {
             switch (error.code) {
               case 1:
-                console.log('Permission Denied');
+                console.log("Permission Denied");
                 break;
               case 2:
-                console.log('Position Unavailable');
+                console.log("Position Unavailable");
                 break;
               case 3:
-                console.log('Timeout');
+                console.log("Timeout");
                 break;
             }
-          });
+          }
+        );
       }
     }
   }
 
   updatePosition(position: GeolocationPosition) {
-    var lat = DmsService.convertToDms(position.coords.latitude, LocationType.Latitude);
-    var long = DmsService.convertToDms(position.coords.longitude, LocationType.Longitude);
+    var lat = DmsService.convertToDms(
+      position.coords.latitude,
+      LocationType.Latitude
+    );
+    var long = DmsService.convertToDms(
+      position.coords.longitude,
+      LocationType.Longitude
+    );
     this.myLoc = new Coordinate(lat, long);
-    console.log('Device Location: ', this.myLoc.latitude.toString(), this.myLoc.longitude.toString());
+    console.log(
+      "Device Location: ",
+      this.myLoc.latitude.toString(),
+      this.myLoc.longitude.toString()
+    );
     this.isLocated = true;
   }
 
@@ -131,15 +159,31 @@ export class ClueDetailPage implements OnInit, OnDestroy {
         var allMetaData = exif.getAllTags(this);
         console.log(allMetaData);
 
-        gpsExtracted.latitude.degrees = 1.0 * allMetaData.GPSLatitude[0].numerator / allMetaData.GPSLatitude[0].denominator;
-        gpsExtracted.latitude.minutes = 1.0 * allMetaData.GPSLatitude[1].numerator / allMetaData.GPSLatitude[1].denominator;
-        gpsExtracted.latitude.seconds = 1.0 * allMetaData.GPSLatitude[2].numerator / allMetaData.GPSLatitude[2].denominator;
-        gpsExtracted.latitude.direction = DMS.directionFromText(allMetaData.GPSLatitudeRef);
+        gpsExtracted.latitude.degrees =
+          (1.0 * allMetaData.GPSLatitude[0].numerator) /
+          allMetaData.GPSLatitude[0].denominator;
+        gpsExtracted.latitude.minutes =
+          (1.0 * allMetaData.GPSLatitude[1].numerator) /
+          allMetaData.GPSLatitude[1].denominator;
+        gpsExtracted.latitude.seconds =
+          (1.0 * allMetaData.GPSLatitude[2].numerator) /
+          allMetaData.GPSLatitude[2].denominator;
+        gpsExtracted.latitude.direction = DMS.directionFromText(
+          allMetaData.GPSLatitudeRef
+        );
 
-        gpsExtracted.longitude.degrees = 1.0 * allMetaData.GPSLongitude[0].numerator / allMetaData.GPSLongitude[0].denominator;
-        gpsExtracted.longitude.minutes = 1.0 * allMetaData.GPSLongitude[1].numerator / allMetaData.GPSLongitude[1].denominator;
-        gpsExtracted.longitude.seconds = 1.0 * allMetaData.GPSLongitude[2].numerator / allMetaData.GPSLongitude[2].denominator;
-        gpsExtracted.longitude.direction = DMS.directionFromText(allMetaData.GPSLongitudeRef);
+        gpsExtracted.longitude.degrees =
+          (1.0 * allMetaData.GPSLongitude[0].numerator) /
+          allMetaData.GPSLongitude[0].denominator;
+        gpsExtracted.longitude.minutes =
+          (1.0 * allMetaData.GPSLongitude[1].numerator) /
+          allMetaData.GPSLongitude[1].denominator;
+        gpsExtracted.longitude.seconds =
+          (1.0 * allMetaData.GPSLongitude[2].numerator) /
+          allMetaData.GPSLongitude[2].denominator;
+        gpsExtracted.longitude.direction = DMS.directionFromText(
+          allMetaData.GPSLongitudeRef
+        );
 
         resolve(gpsExtracted);
       });
@@ -156,22 +200,23 @@ export class ClueDetailPage implements OnInit, OnDestroy {
 
   compassHeading() {
     const bearings = [
-      'North',
-      'North-Northeast',
-      'Northeast',
-      'East-Northeast',
-      'East',
-      'East-Southeast',
-      'Southeast',
-      'South-Southeast',
-      'South',
-      'South-Southwest',
-      'Southwest',
-      'West-Southwest',
-      'West',
-      'West-Northwest',
-      'Northwest',
-      'North-Northwest'];
+      "North",
+      "North-Northeast",
+      "Northeast",
+      "East-Northeast",
+      "East",
+      "East-Southeast",
+      "Southeast",
+      "South-Southeast",
+      "South",
+      "South-Southwest",
+      "Southwest",
+      "West-Southwest",
+      "West",
+      "West-Northwest",
+      "Northwest",
+      "North-Northwest",
+    ];
 
     const bearing = Math.floor(this.bearing() / 22.5);
 
@@ -182,39 +227,42 @@ export class ClueDetailPage implements OnInit, OnDestroy {
     let actionSheet = await this.actionSheetCtrl.create({
       buttons: [
         {
-          text: 'Hint',
+          text: "Hint",
           handler: () => {
-            console.log('Hint clicked');
+            console.log("Hint clicked");
             this.hint();
-          }
-        }, {
-          text: 'Found it!',
+          },
+        },
+        {
+          text: "Found it!",
           handler: () => {
-            console.log('Found it clicked');
+            console.log("Found it clicked");
             this.geoCheck();
-          }
-        }, {
+          },
+        },
+        {
           //     text: 'Report an Issue',
           //     handler: () => {
           //         console.log('Report clicked');
           //     }
           // }, {
-          text: 'Cancel',
-          role: 'cancel',
+          text: "Cancel",
+          role: "cancel",
           handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
+            console.log("Cancel clicked");
+          },
+        },
+      ],
     });
 
     actionSheet.present();
   }
 
-
   async hint() {
     this.isFlipped = !this.isFlipped;
-    if (this.isFlipped) { await this.getCurrentPosition(); }
+    if (this.isFlipped) {
+      await this.getCurrentPosition();
+    }
   }
 
   hintText() {
@@ -228,7 +276,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
       `It's ${heading} of you, but you've got a long way to go still.`,
       `Go ${heading}, young man or woman.`,
       `It's to the ${heading}, but so far away you won't want to walk there.`,
-      `You're so far away I'm not sure going ${heading} would even help you now.`
+      `You're so far away I'm not sure going ${heading} would even help you now.`,
     ];
 
     const msg = this.msgNumberFromDistance(distance);
@@ -254,19 +302,19 @@ export class ClueDetailPage implements OnInit, OnDestroy {
   }
 
   geoLocationWarning() {
-    return 'Current Location not yet determined. Make sure Geolocation is enabled for this application.';
+    return "Current Location not yet determined. Make sure Geolocation is enabled for this application.";
   }
 
   async geoCheck() {
     const messages: string[] = [
-      'Missed it by that much.',
-      'Sorry, but you need to get a little bit closer.',
-      'You are not quite close enough. Try again.',
-      'Try again, when you get a little closer.',
-      'Almost there, but not quite.',
-      'You need to get a lot closer.',
-      'You are nowhere near it!',
-      'Are you even in the same park?'
+      "Missed it by that much.",
+      "Sorry, but you need to get a little bit closer.",
+      "You are not quite close enough. Try again.",
+      "Try again, when you get a little closer.",
+      "Almost there, but not quite.",
+      "You need to get a lot closer.",
+      "You are nowhere near it!",
+      "Are you even in the same park?",
     ];
 
     await this.getCurrentPosition();
@@ -277,11 +325,9 @@ export class ClueDetailPage implements OnInit, OnDestroy {
         this.isFound = true;
         let toast = await this.toastCtrl.create({
           duration: 3000,
-          message: 'Congratulations - We will check this off the list.',
-          position: 'middle',
-          buttons: [
-            { text: 'Close', role: 'cancel' }
-          ]
+          message: "Congratulations - We will check this off the list.",
+          position: "middle",
+          buttons: [{ text: "Close", role: "cancel" }],
         });
 
         await toast.present();
@@ -294,19 +340,18 @@ export class ClueDetailPage implements OnInit, OnDestroy {
         let toast = await this.toastCtrl.create({
           duration: 3000,
           message: messages[msg],
-          position: 'middle',
-          buttons: [
-            { text: 'Close', role: 'cancel' }
-          ]
+          position: "middle",
+          buttons: [{ text: "Close", role: "cancel" }],
         });
 
         toast.present();
       }
     } else {
       let toast = await this.toastCtrl.create({
-        message: 'Current Location not yet determined. Make sure Geolocation is enabled for this application.',
+        message:
+          "Current Location not yet determined. Make sure Geolocation is enabled for this application.",
         duration: 5000,
-        position: 'middle',
+        position: "middle",
       });
 
       toast.present();

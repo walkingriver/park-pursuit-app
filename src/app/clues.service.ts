@@ -5,28 +5,67 @@ import { Park } from './models/park';
 import { Clue } from './models/clue';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CluesService {
   private allParks: Park[];
 
   constructor(private storage: Storage) {
     this.allParks = [
-      { code: 'ak', name: 'Animal Kingdom', imgSrc: this.imgFromPark('ak'), disabled: false },
-      { code: 'ioa', name: 'Islands of Adventure', imgSrc: this.imgFromPark('ioa'), disabled: true },
-      { code: 'mk', name: 'Magic Kingdom', imgSrc: this.imgFromPark('mk'), disabled: true },
-      { code: 'ec', name: 'Epcot', imgSrc: this.imgFromPark('ec'), disabled: true },
-      { code: 'st', name: 'Hollywood Studios', imgSrc: this.imgFromPark('st'), disabled: true },
-      { code: 'uso', name: 'Universal Studios', imgSrc: this.imgFromPark('uso'), disabled: false },
-      { code: 'byu', name: 'BYU Provo', imgSrc: this.imgFromPark('byu'), disabled: true },
-      { code: 'cfl', name: 'Celebration FL', imgSrc: this.imgFromPark('cfl'), disabled: true },
+      {
+        code: 'ak',
+        name: 'Animal Kingdom',
+        imgSrc: this.imgFromPark('ak'),
+        disabled: false,
+      },
+      {
+        code: 'ioa',
+        name: 'Islands of Adventure',
+        imgSrc: this.imgFromPark('ioa'),
+        disabled: false,
+      },
+      {
+        code: 'mk',
+        name: 'Magic Kingdom',
+        imgSrc: this.imgFromPark('mk'),
+        disabled: false,
+      },
+      {
+        code: 'ec',
+        name: 'Epcot',
+        imgSrc: this.imgFromPark('ec'),
+        disabled: false,
+      },
+      {
+        code: 'st',
+        name: 'Hollywood Studios',
+        imgSrc: this.imgFromPark('st'),
+        disabled: false,
+      },
+      {
+        code: 'uso',
+        name: 'Universal Studios',
+        imgSrc: this.imgFromPark('uso'),
+        disabled: false,
+      },
+      {
+        code: 'byu',
+        name: 'BYU Provo',
+        imgSrc: this.imgFromPark('byu'),
+        disabled: false,
+      },
+      {
+        code: 'cfl',
+        name: 'Celebration FL',
+        imgSrc: this.imgFromPark('cfl'),
+        disabled: false,
+      },
     ];
   }
 
   getParks(): Promise<Park[]> {
-    return Promise.resolve(this.allParks.filter(x => !x.disabled));
+    return Promise.resolve(this.allParks.filter((x) => !x.disabled));
   }
-
 
   getPark(parkId: string): Promise<Park> {
     return Promise.resolve(this.allParks.find((v) => v.code == parkId));
@@ -47,7 +86,7 @@ export class CluesService {
   }
 
   urlFromClue(clue: Clue): string {
-    const url = `./assets/clues/${clue.parkCode}/${clue.filename}.jpg`
+    const url = `./assets/clues/${clue.parkCode}/${clue.filename}.jpg`;
     return url;
   }
 
@@ -64,18 +103,16 @@ export class CluesService {
     console.log(storageClues);
 
     const staticClues = this.getStaticClues();
-    const allClues = _.unionWith(storageClues, staticClues, (staticClue, savedClue) => {
-      return (staticClue.parkCode === savedClue.parkCode && staticClue.filename === savedClue.filename)
-    });
-
-    // if (allClues.length > storageClues.length) {
-    //   // Save all of the clues that don't have an id value
-    //   let allOfEm = allClues.filter(x => !x.id).map((clue, i) => {
-    //     return this.saveClue(clue);
-    //   });
-
-    //   await Promise.all(allOfEm);
-    // }
+    const allClues = _.unionWith(
+      storageClues,
+      staticClues,
+      (staticClue, savedClue) => {
+        return (
+          staticClue.parkCode === savedClue.parkCode &&
+          staticClue.filename === savedClue.filename
+        );
+      }
+    );
 
     return allClues;
   }
@@ -482,7 +519,7 @@ export class CluesService {
       { parkCode: 'cfl', filename: '8' },
       { parkCode: 'cfl', filename: '9' },
       { parkCode: 'cfl', filename: '10' },
-      { parkCode: 'na', filename: 'x' }
+      { parkCode: 'na', filename: 'x' },
     ];
 
     return clues;
