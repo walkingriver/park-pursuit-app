@@ -9,9 +9,9 @@ describe('ClueDetailPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClueDetailPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
+    imports: [ClueDetailPage],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
     .compileComponents();
   }));
 

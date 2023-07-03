@@ -4,11 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../game.service';
 import { Park } from '../models/park';
 import { Game } from '../models/game';
+import { NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-new-game',
-  templateUrl: './new-game.page.html',
-  styleUrls: ['./new-game.page.scss'],
+    selector: 'app-new-game',
+    templateUrl: './new-game.page.html',
+    styleUrls: ['./new-game.page.scss'],
+    standalone: true,
+    imports: [IonicModule, FormsModule, NgFor]
 })
 export class NewGamePage implements OnInit {
   parks = [];

@@ -9,9 +9,9 @@ describe('InstructionsPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ InstructionsPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
+    imports: [InstructionsPage],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
     .compileComponents();
   }));
 

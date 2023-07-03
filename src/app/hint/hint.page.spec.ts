@@ -9,9 +9,9 @@ describe('HintPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ HintPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
+    imports: [HintPage],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
     .compileComponents();
   }));
 

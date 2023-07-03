@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Clue } from '../models/clue';
 import { CluesService } from '../clues.service';
-import { ActivatedRoute } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Platform, IonicModule } from '@ionic/angular';
 import { GameService } from '../game.service';
 import { Game } from '../models/game';
+import { NgFor, NgIf, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-park',
-  templateUrl: './park.page.html',
-  styleUrls: ['./park.page.scss'],
+    selector: 'app-park',
+    templateUrl: './park.page.html',
+    styleUrls: ['./park.page.scss'],
+    standalone: true,
+    imports: [IonicModule, NgFor, RouterLink, NgIf, DatePipe]
 })
 export class ParkPage implements OnInit {
   park = { code: '', name: '' };

@@ -1,13 +1,17 @@
 import { Component } from "@angular/core";
-import { Platform } from "@ionic/angular";
+import { Platform, IonicModule } from "@ionic/angular";
 import { Plugins } from "@capacitor/core";
 import { environment } from "src/environments/environment";
+import { RouterLink } from "@angular/router";
+import { NgFor } from "@angular/common";
 const { SplashScreen } = Plugins;
 const { AdMob } = Plugins;
 
 @Component({
-  selector: "app-root",
-  templateUrl: "app.component.html",
+    selector: "app-root",
+    templateUrl: "app.component.html",
+    standalone: true,
+    imports: [IonicModule, NgFor, RouterLink]
 })
 export class AppComponent {
   public appPages = [

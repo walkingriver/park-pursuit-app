@@ -1,11 +1,7 @@
 import { Component, OnInit, NgZone, OnDestroy } from "@angular/core";
 import { Clue } from "../models/clue";
 import { Coordinate } from "../models/coordinate";
-import {
-  ActionSheetController,
-  Platform,
-  ToastController,
-} from "@ionic/angular";
+import { ActionSheetController, Platform, ToastController, IonicModule } from "@ionic/angular";
 import { LocationType, DMS } from "../models/dms";
 import { CluesService } from "../clues.service";
 import * as exif from "exif-js";
@@ -14,13 +10,16 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Plugins, GeolocationPosition } from "@capacitor/core";
 import { DmsService } from "../dms.service";
+import { NgIf, DecimalPipe, DatePipe } from "@angular/common";
 
 const { Geolocation } = Plugins;
 
 @Component({
-  selector: "app-clue-detail",
-  templateUrl: "./clue-detail.page.html",
-  styleUrls: ["./clue-detail.page.scss"],
+    selector: "app-clue-detail",
+    templateUrl: "./clue-detail.page.html",
+    styleUrls: ["./clue-detail.page.scss"],
+    standalone: true,
+    imports: [IonicModule, NgIf, DecimalPipe, DatePipe]
 })
 export class ClueDetailPage implements OnInit, OnDestroy {
   interval: number;

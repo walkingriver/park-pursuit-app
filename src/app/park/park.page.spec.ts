@@ -9,9 +9,9 @@ describe('ParkPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ParkPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
+    imports: [ParkPage],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
     .compileComponents();
   }));
 

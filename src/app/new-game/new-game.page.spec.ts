@@ -9,9 +9,9 @@ describe('NewGamePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewGamePage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
+    imports: [NewGamePage],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
     .compileComponents();
   }));
 

@@ -1,15 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 import { Game } from "../models/game";
 import { Park } from "../models/park";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { CluesService } from "../clues.service";
-import { AlertController } from "@ionic/angular";
+import { AlertController, IonicModule } from "@ionic/angular";
 import { GameService } from "../game.service";
+import { NgIf, NgFor, DatePipe } from "@angular/common";
 
 @Component({
-  selector: "app-games",
-  templateUrl: "./games.page.html",
-  styleUrls: ["./games.page.scss"],
+    selector: "app-games",
+    templateUrl: "./games.page.html",
+    styleUrls: ["./games.page.scss"],
+    standalone: true,
+    imports: [IonicModule, NgIf, RouterLink, NgFor, DatePipe]
 })
 export class GamesPage implements OnInit {
   games: Game[];
