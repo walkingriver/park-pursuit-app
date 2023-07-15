@@ -1,25 +1,30 @@
-import { Component, OnInit, NgZone, OnDestroy } from "@angular/core";
-import { Clue } from "../models/clue";
-import { Coordinate } from "../models/coordinate";
-import { ActionSheetController, Platform, ToastController, IonicModule } from "@ionic/angular";
-import { LocationType, DMS } from "../models/dms";
-import { CluesService } from "../clues.service";
-import * as exif from "exif-js";
-import { environment } from "src/environments/environment";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
-import { Plugins, GeolocationPosition } from "@capacitor/core";
-import { DmsService } from "../dms.service";
-import { NgIf, DecimalPipe, DatePipe } from "@angular/common";
+import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { Clue } from '../models/clue';
+import { Coordinate } from '../models/coordinate';
+import {
+  ActionSheetController,
+  Platform,
+  ToastController,
+  IonicModule,
+} from '@ionic/angular';
+import { LocationType, DMS } from '../models/dms';
+import { CluesService } from '../clues.service';
+import * as exif from 'exif-js';
+import { environment } from 'src/environments/environment';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Plugins, GeolocationPosition } from '@capacitor/core';
+import { DmsService } from '../dms.service';
+import { NgIf, DecimalPipe, DatePipe } from '@angular/common';
 
 const { Geolocation } = Plugins;
 
 @Component({
-    selector: "app-clue-detail",
-    templateUrl: "./clue-detail.page.html",
-    styleUrls: ["./clue-detail.page.scss"],
-    standalone: true,
-    imports: [IonicModule, NgIf, DecimalPipe, DatePipe]
+  selector: 'app-clue-detail',
+  templateUrl: './clue-detail.page.html',
+  styleUrls: ['./clue-detail.page.scss'],
+  standalone: true,
+  imports: [IonicModule, NgIf, DecimalPipe, DatePipe],
 })
 export class ClueDetailPage implements OnInit, OnDestroy {
   interval: number;
@@ -27,12 +32,12 @@ export class ClueDetailPage implements OnInit, OnDestroy {
   isFlipped: any;
   isFound: boolean;
   showHint: boolean = false;
-  clue: Clue = { parkCode: "", filename: "" };
+  clue: Clue = { parkCode: '', filename: '' };
   gps: Coordinate = Coordinate.empty();
   isLocated: boolean;
   myLoc: Coordinate = Coordinate.empty();
   sub: Subscription;
-  parkCode = "";
+  parkCode = '';
   isProduction = true;
 
   constructor(
@@ -57,7 +62,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
       console.log(this.clue);
     });
 
-    console.log("Loaded: ", exif);
+    console.log('Loaded: ', exif);
     this.getCurrentPosition();
 
     if (!this.isProduction) {
@@ -108,7 +113,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
               LocationType.Longitude
             );
             console.log(
-              "Device Location: ",
+              'Device Location: ',
               this.myLoc.latitude.toString(),
               this.myLoc.longitude.toString()
             );
@@ -117,13 +122,13 @@ export class ClueDetailPage implements OnInit, OnDestroy {
           (error) => {
             switch (error.code) {
               case 1:
-                console.log("Permission Denied");
+                console.log('Permission Denied');
                 break;
               case 2:
-                console.log("Position Unavailable");
+                console.log('Position Unavailable');
                 break;
               case 3:
-                console.log("Timeout");
+                console.log('Timeout');
                 break;
             }
           }
@@ -143,7 +148,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
     );
     this.myLoc = new Coordinate(lat, long);
     console.log(
-      "Device Location: ",
+      'Device Location: ',
       this.myLoc.latitude.toString(),
       this.myLoc.longitude.toString()
     );
@@ -199,22 +204,22 @@ export class ClueDetailPage implements OnInit, OnDestroy {
 
   compassHeading() {
     const bearings = [
-      "North",
-      "North-Northeast",
-      "Northeast",
-      "East-Northeast",
-      "East",
-      "East-Southeast",
-      "Southeast",
-      "South-Southeast",
-      "South",
-      "South-Southwest",
-      "Southwest",
-      "West-Southwest",
-      "West",
-      "West-Northwest",
-      "Northwest",
-      "North-Northwest",
+      'North',
+      'North-Northeast',
+      'Northeast',
+      'East-Northeast',
+      'East',
+      'East-Southeast',
+      'Southeast',
+      'South-Southeast',
+      'South',
+      'South-Southwest',
+      'Southwest',
+      'West-Southwest',
+      'West',
+      'West-Northwest',
+      'Northwest',
+      'North-Northwest',
     ];
 
     const bearing = Math.floor(this.bearing() / 22.5);
@@ -226,16 +231,16 @@ export class ClueDetailPage implements OnInit, OnDestroy {
     let actionSheet = await this.actionSheetCtrl.create({
       buttons: [
         {
-          text: "Hint",
+          text: 'Hint',
           handler: () => {
-            console.log("Hint clicked");
+            console.log('Hint clicked');
             this.hint();
           },
         },
         {
-          text: "Found it!",
+          text: 'Found it!',
           handler: () => {
-            console.log("Found it clicked");
+            console.log('Found it clicked');
             this.geoCheck();
           },
         },
@@ -245,10 +250,10 @@ export class ClueDetailPage implements OnInit, OnDestroy {
           //         console.log('Report clicked');
           //     }
           // }, {
-          text: "Cancel",
-          role: "cancel",
+          text: 'Cancel',
+          role: 'cancel',
           handler: () => {
-            console.log("Cancel clicked");
+            console.log('Cancel clicked');
           },
         },
       ],
@@ -268,14 +273,32 @@ export class ClueDetailPage implements OnInit, OnDestroy {
     const distance = Math.round(this.distance());
     const heading = this.compassHeading();
     const messages: string[] = [
-      `It's just a few meters away to the ${heading}`,
-      `Sorry, but you need to go a little bit more to the ${heading}.`,
-      `You are not quite close enough, but keep heading ${heading}.`,
-      `If you look ${heading}, you probably still can't see it.`,
-      `It's ${heading} of you, but you've got a long way to go still.`,
-      `Go ${heading}, young man or woman.`,
-      `It's to the ${heading}, but so far away you won't want to walk there.`,
-      `You're so far away I'm not sure going ${heading} would even help you now.`,
+      `You're practically standing on it! Just a hop, skip, and a jump ${heading}.`,
+      `It's as close as the next churro stand. Just a few meters to the ${heading}.`,
+      `You're getting warmer. Just a little further to the ${heading}.`,
+      `It's no moonwalk, but you'll need to strut a bit more to the ${heading}.`,
+      `You're in the ballpark but the wrong seat. Keep heading ${heading}.`,
+      `If you squint real hard and look ${heading}, you still won't see it. Keep moving!`,
+      `Don't lose hope. It's ${heading} of you, but you've got a decent trek ahead.`,
+      `Feel like an explorer yet? Venture forth, ${heading}.`,
+      `Pack a lunch, you've got quite a journey ${heading}.`,
+      `It's to the ${heading}, but you might want to consider a Segway at this point.`,
+      `It's ${heading}, but you might need a magical carpet to get there anytime soon.`,
+      `You're so far away, I'm not sure if even a marathon sprint ${heading} would get you there.`,
+      `Hope you brought a compass. You're going to need it to head ${heading}.`,
+      `You're so far off, even the GPS is laughing. Maybe start walking ${heading}?`,
+      `Time for an epic journey ${heading}! Bring an audiobook or two.`,
+      `If you took a plane ${heading}, you might get there by tomorrow.`,
+      `It's ${heading}, but I hope you're not afraid of a little cardio.`,
+      `You're going to need to channel your inner Lewis and Clark, and start heading ${heading}.`,
+      `Prepare for a trek! It's ${heading} and a day's journey away.`,
+      `You're so far away, it's like you're on a different continent. Maybe try ${heading}?`,
+      `Even a homing pigeon would be confused. Try heading ${heading}.`,
+      `It's ${heading}, but you might want to take a snack break first.`,
+      `You're so far away, you might need a change of postal code. Start walking ${heading}.`,
+      `Even a marathoner would start sweating. But fear not, head ${heading}.`,
+      `It's ${heading}. You might want to pack a suitcase for this trip.`,
+      `You're so far away, you're practically in Narnia. Try going ${heading}.`,
     ];
 
     const msg = this.msgNumberFromDistance(distance);
@@ -301,19 +324,19 @@ export class ClueDetailPage implements OnInit, OnDestroy {
   }
 
   geoLocationWarning() {
-    return "Current Location not yet determined. Make sure Geolocation is enabled for this application.";
+    return 'Current Location not yet determined. Make sure Geolocation is enabled for this application.';
   }
 
   async geoCheck() {
     const messages: string[] = [
-      "Missed it by that much.",
-      "Sorry, but you need to get a little bit closer.",
-      "You are not quite close enough. Try again.",
-      "Try again, when you get a little closer.",
-      "Almost there, but not quite.",
-      "You need to get a lot closer.",
-      "You are nowhere near it!",
-      "Are you even in the same park?",
+      'Missed it by that much.',
+      'Sorry, but you need to get a little bit closer.',
+      'You are not quite close enough. Try again.',
+      'Try again, when you get a little closer.',
+      'Almost there, but not quite.',
+      'You need to get a lot closer.',
+      'You are nowhere near it!',
+      'Are you even in the same park?',
     ];
 
     await this.getCurrentPosition();
@@ -324,9 +347,9 @@ export class ClueDetailPage implements OnInit, OnDestroy {
         this.isFound = true;
         let toast = await this.toastCtrl.create({
           duration: 3000,
-          message: "Congratulations - We will check this off the list.",
-          position: "middle",
-          buttons: [{ text: "Close", role: "cancel" }],
+          message: 'Congratulations - We will check this off the list.',
+          position: 'middle',
+          buttons: [{ text: 'Close', role: 'cancel' }],
         });
 
         await toast.present();
@@ -339,8 +362,8 @@ export class ClueDetailPage implements OnInit, OnDestroy {
         let toast = await this.toastCtrl.create({
           duration: 3000,
           message: messages[msg],
-          position: "middle",
-          buttons: [{ text: "Close", role: "cancel" }],
+          position: 'middle',
+          buttons: [{ text: 'Close', role: 'cancel' }],
         });
 
         toast.present();
@@ -348,9 +371,9 @@ export class ClueDetailPage implements OnInit, OnDestroy {
     } else {
       let toast = await this.toastCtrl.create({
         message:
-          "Current Location not yet determined. Make sure Geolocation is enabled for this application.",
+          'Current Location not yet determined. Make sure Geolocation is enabled for this application.',
         duration: 5000,
-        position: "middle",
+        position: 'middle',
       });
 
       toast.present();
