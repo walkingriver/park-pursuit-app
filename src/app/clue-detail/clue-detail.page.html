@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Detail</ion-title>
     <ion-buttons slot="end" *ngIf="!clue.isFound">
@@ -16,16 +16,28 @@
   <div class="container">
     <div class="card" [class.flipped]="isFlipped">
       <figure class="front">
-        <img [src]="clueService.urlFromClue(clue)" (click)="hint()" (load)="loaded($event)">
+        <img
+          [src]="clueService.urlFromClue(clue)"
+          (click)="hint()"
+          (load)="loaded($event)"
+        />
         <p>
-          <span *ngIf="clue.isFound">Found {{clue.dateFound | date: 'mediumDate' }}</span>
+          <span *ngIf="clue.isFound"
+            >Found {{clue.dateFound | date: 'mediumDate' }}</span
+          >
         </p>
       </figure>
       <figure class="back" (click)="hint()">
         <h3 *ngIf="isLocated">{{hintText()}}</h3>
         <h3 *ngIf="!isLocated">{{geoLocationWarning()}}</h3>
         <p>
-          <ion-button *ngIf="!clue.isFound" (click)="geoCheck()" color="dark" round>Found It</ion-button>
+          <ion-button
+            *ngIf="!clue.isFound"
+            (click)="geoCheck()"
+            color="dark"
+            round
+            >Found It</ion-button
+          >
         </p>
       </figure>
     </div>
@@ -33,9 +45,9 @@
 
   <p class="hint" *ngIf="!isProduction">
     Location: {{myLoc.latitude}} {{myLoc.longitude}}
-    <br /> Clue Location: {{gps.latitude}} {{gps.longitude}}
-    <br /> Bearing: {{compassHeading()}}
-    <br /> {{distance() | number:'1.0-0'}} meters
+    <br />
+    Clue Location: {{gps.latitude}} {{gps.longitude}} <br />
+    Bearing: {{compassHeading()}} <br />
+    {{distance() | number:'1.0-0'}} meters
   </p>
-
 </ion-content>

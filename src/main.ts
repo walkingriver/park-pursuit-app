@@ -6,10 +6,10 @@ import { AppComponent } from './app/app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { Drivers } from '@ionic/storage';
 import { IonicStorageModule } from '@ionic/storage-angular';
-import { AppRoutingModule } from './app/app-routing.module';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { IonicRouteStrategy, IonicModule } from '@ionic/angular';
-import { RouteReuseStrategy } from '@angular/router';
+import { RouteReuseStrategy, provideRouter } from '@angular/router';
+import { routes } from 'src/app/app-routes';
 
 if (environment.production) {
     enableProdMode();
@@ -17,7 +17,8 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot({
+        provideRouter(routes),
+        importProvidersFrom(BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot({
             name: 'park-pursuit', driverOrder: [
                 Drivers.IndexedDB,
                 Drivers.LocalStorage]

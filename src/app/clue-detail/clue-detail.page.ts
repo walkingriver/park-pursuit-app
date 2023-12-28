@@ -7,7 +7,7 @@ import {
   ToastController,
   IonicModule,
 } from '@ionic/angular';
-import { LocationType, DMS } from '../models/dms';
+import { LocationType } from '../models/dms';
 import { CluesService } from '../clues.service';
 import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
