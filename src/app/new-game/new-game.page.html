@@ -7,36 +7,37 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content class="new-game">
-    <ion-list>
-      <ion-list-header>
-        Select your options
-      </ion-list-header>
-      <ion-item lines="none">
-        <ion-label>Include previously found clues</ion-label>
-        <ion-toggle [(ngModel)]="includeFound"></ion-toggle>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label>Game Size</ion-label>
-        <ion-select [selectedText]="clues" [(ngModel)]="clues">
-          <ion-select-option value="5">5 Clues</ion-select-option>
-          <ion-select-option value="10">10 Clues</ion-select-option>
-          <ion-select-option value="15">15 Clues</ion-select-option>
-          <ion-select-option value="20">20 Clues</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-list-header>
-        Select a park to begin
-      </ion-list-header>
-      <ion-item *ngFor="let park of parks" (click)="newGame(park)" id="new-{{park.code}}">
-          <ion-thumbnail slot="start">
-            <img [src]="park.imgSrc" />
-          </ion-thumbnail>
-          <ion-label class="ion-text-wrap">{{park.name}}</ion-label>
-            <ion-badge slot="end">Unfound: {{unfoundClues(park)}}</ion-badge>
-          <!-- <ion-button clear item-end><ion-icon name="play"></ion-icon></ion-button> -->
-          <!-- <ion-button fill="clear" slot="end" (click)="newGame(park)">Play</ion-button> -->
-      </ion-item>
-    </ion-list>
-  </ion-content>
+  <ion-list>
+    <ion-list-header> Select your options </ion-list-header>
+    <ion-item lines="none">
+      <ion-label>Include previously found clues</ion-label>
+      <ion-toggle [(ngModel)]="includeFound"></ion-toggle>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>Game Size</ion-label>
+      <ion-select [selectedText]="clues" [(ngModel)]="clues">
+        <ion-select-option value="5">5 Clues</ion-select-option>
+        <ion-select-option value="10">10 Clues</ion-select-option>
+        <ion-select-option value="15">15 Clues</ion-select-option>
+        <ion-select-option value="20">20 Clues</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-list-header> Select a park to begin </ion-list-header>
+    @for (park of parks; track $index) {
+    <ion-item (click)="newGame(park)" id="new-{{park.code}}">
+      <ion-thumbnail slot="start">
+        <img [src]="park.imgSrc" alt="{{park.name}}" />
+      </ion-thumbnail>
+      <ion-label class="ion-text-wrap">{{park.name}}</ion-label>
+      <ion-badge slot="end">Unfound: {{unfoundClues(park)}}</ion-badge>
+    </ion-item>
+    } @empty {
+    <ion-item>
+      <ion-label class="ion-text-wrap"
+        >There are no parks with unfound clues. Please add some.</ion-label
+      >
+    </ion-item>
+    }
+  </ion-list>
+</ion-content>

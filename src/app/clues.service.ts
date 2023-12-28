@@ -102,11 +102,9 @@ export class CluesService {
 
   async getClues(): Promise<Clue[]> {
     let storageClues: Clue[] = [];
-    await this.storage.forEach((clue) => {
+    await this.storage?.forEach((clue) => {
       storageClues.push(clue);
     });
-
-    console.log(storageClues);
 
     const staticClues = this.getStaticClues();
     const allClues = _.unionWith(
@@ -125,18 +123,18 @@ export class CluesService {
 
   async getClue(parkCode: string, filename: string): Promise<Clue> {
     const id = `${parkCode}-${filename}`;
-    const savedClue = await this.storage.get(id);
+    const savedClue = await this.storage?.get(id);
     const clue: Clue = { filename, parkCode };
     return Object.assign(clue, savedClue || {});
   }
 
   saveClue(clue: Clue): Promise<any> {
     const id = `${clue.parkCode}-${clue.filename}`;
-    return this.storage.set(id, clue);
+    return this.storage?.set(id, clue);
   }
 
   resetClues(): Promise<any> {
-    return this.storage.clear();
+    return this.storage?.clear();
   }
 
   getStaticClues(): Clue[] {

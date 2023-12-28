@@ -4,16 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../game.service';
 import { Park } from '../models/park';
 import { Game } from '../models/game';
-import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
-    selector: 'app-new-game',
-    templateUrl: './new-game.page.html',
-    styleUrls: ['./new-game.page.scss'],
-    standalone: true,
-    imports: [IonicModule, FormsModule, NgFor]
+  selector: 'app-new-game',
+  templateUrl: './new-game.page.html',
+  styleUrls: ['./new-game.page.scss'],
+  standalone: true,
+  imports: [IonicModule, FormsModule]
 })
 export class NewGamePage implements OnInit {
   parks = [];
@@ -22,9 +21,9 @@ export class NewGamePage implements OnInit {
   clueCounts = [];
 
   constructor(
-    private clueService: CluesService, 
+    private clueService: CluesService,
     private gameService: GameService,
-    public navCtrl: Router, 
+    public navCtrl: Router,
     public navParams: ActivatedRoute) { }
 
   async ngOnInit() {
@@ -38,7 +37,7 @@ export class NewGamePage implements OnInit {
   }
 
   unfoundClues(park: Park) {
-    let count = this.clueCounts.find( c=> c.code === park.code);
+    let count = this.clueCounts.find(c => c.code === park.code);
     return count ? count.clueCount : 0;
   }
 

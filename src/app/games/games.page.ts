@@ -5,14 +5,14 @@ import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { CluesService } from "../clues.service";
 import { AlertController, IonicModule } from "@ionic/angular";
 import { GameService } from "../game.service";
-import { NgIf, NgFor, DatePipe } from "@angular/common";
+import { NgIf, DatePipe } from "@angular/common";
 
 @Component({
-    selector: "app-games",
-    templateUrl: "./games.page.html",
-    styleUrls: ["./games.page.scss"],
-    standalone: true,
-    imports: [IonicModule, NgIf, RouterLink, NgFor, DatePipe]
+  selector: "app-games",
+  templateUrl: "./games.page.html",
+  styleUrls: ["./games.page.scss"],
+  standalone: true,
+  imports: [IonicModule, NgIf, RouterLink, DatePipe]
 })
 export class GamesPage implements OnInit {
   games: Game[];
@@ -24,7 +24,7 @@ export class GamesPage implements OnInit {
     private gameService: GameService,
     public navCtrl: Router,
     public navParams: ActivatedRoute
-  ) {}
+  ) { }
 
   async ngOnInit() {
     this.games = await this.gameService.loadAll();

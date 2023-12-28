@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>{{park?.name}}</ion-title>
   </ion-toolbar>
@@ -10,17 +10,25 @@
 <ion-content [class]="park.code">
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let clue of clues">
+      @for (clue of clues; track $index) {
+      <ion-col size="6">
         <div class="polaroid">
-          <a [routerLink]="[ '/clue', park.code, clue.filename ]" routerDirection="forward">
-            <img [src]="clueService.urlFromClue(clue)" class="polaroid">
-            <p><span *ngIf="clue.isFound">Found {{clue.dateFound | date: 'mediumDate' }}</span></p>
+          <a
+            [routerLink]="[ '/clue', park.code, clue.filename ]"
+            routerDirection="forward"
+          >
+            <img [src]="clueService.urlFromClue(clue)" class="polaroid" />
+            <p>
+              <span *ngIf="clue.isFound"
+                >Found {{clue.dateFound | date: 'mediumDate' }}</span
+              >
+            </p>
           </a>
         </div>
       </ion-col>
+      }
     </ion-row>
   </ion-grid>
-
 </ion-content>
 
 <!-- <ion-footer>
