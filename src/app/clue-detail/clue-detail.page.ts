@@ -14,7 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Plugins, GeolocationPosition } from '@capacitor/core';
 import { DmsService } from '../dms.service';
-import { NgIf, DecimalPipe, DatePipe } from '@angular/common';
+import { DecimalPipe, DatePipe } from '@angular/common';
 import exifr from 'exifr' // to use ES Modules
 
 const { Geolocation } = Plugins;
@@ -24,7 +24,7 @@ const { Geolocation } = Plugins;
   templateUrl: './clue-detail.page.html',
   styleUrls: ['./clue-detail.page.scss'],
   standalone: true,
-  imports: [IonicModule, NgIf, DecimalPipe, DatePipe],
+  imports: [IonicModule, DecimalPipe, DatePipe],
 })
 export class ClueDetailPage implements OnInit, OnDestroy {
   interval: number;

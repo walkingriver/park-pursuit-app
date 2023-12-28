@@ -4,11 +4,13 @@
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Detail</ion-title>
-    <ion-buttons slot="end" *ngIf="!clue.isFound">
+    @if(!clue.isFound) {
+    <ion-buttons slot="end">
       <ion-button fill="clear" (click)="action()">
         <ion-icon name="more"></ion-icon>
       </ion-button>
     </ion-buttons>
+    }
   </ion-toolbar>
 </ion-header>
 
@@ -22,32 +24,34 @@
           (load)="loaded($event)"
         />
         <p>
-          <span *ngIf="clue.isFound"
-            >Found {{clue.dateFound | date: 'mediumDate' }}</span
-          >
+          @if (clue.isFound) {
+          <span>Found {{clue.dateFound | date: 'mediumDate' }}</span>
+          }
         </p>
       </figure>
       <figure class="back" (click)="hint()">
-        <h3 *ngIf="isLocated">{{hintText()}}</h3>
-        <h3 *ngIf="!isLocated">{{geoLocationWarning()}}</h3>
+        <h3>
+          @if(isLocated) { {{hintText()}} } @else { {{geoLocationWarning()}} }
+        </h3>
+
+        @if(!clue.isFound) {
         <p>
-          <ion-button
-            *ngIf="!clue.isFound"
-            (click)="geoCheck()"
-            color="dark"
-            round
+          <ion-button (click)="geoCheck()" color="dark" round
             >Found It</ion-button
           >
         </p>
+        }
       </figure>
     </div>
   </div>
 
-  <p class="hint" *ngIf="!isProduction">
+  @if(!isProduction) {
+  <p class="hint">
     Location: {{myLoc.latitude}} {{myLoc.longitude}}
     <br />
     Clue Location: {{gps.latitude}} {{gps.longitude}} <br />
     Bearing: {{compassHeading()}} <br />
     {{distance() | number:'1.0-0'}} meters
   </p>
+  }
 </ion-content>

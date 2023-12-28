@@ -30,7 +30,6 @@
     </ion-item-sliding>
     } @empty {
     <ion-item
-      *ngIf="!(games && games.length)"
       [routerLink]="['/new-game']"
       routerDirection="forward"
       lines="full"

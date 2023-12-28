@@ -5,14 +5,14 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Platform, IonicModule } from '@ionic/angular';
 import { GameService } from '../game.service';
 import { Game } from '../models/game';
-import { NgIf, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-park',
   templateUrl: './park.page.html',
   styleUrls: ['./park.page.scss'],
   standalone: true,
-  imports: [IonicModule, RouterLink, NgIf, DatePipe]
+  imports: [IonicModule, RouterLink, DatePipe]
 })
 export class ParkPage implements OnInit {
   public clueService = inject(CluesService);
@@ -34,7 +34,6 @@ export class ParkPage implements OnInit {
     this.game = await this.gameService.load(this.gameId);
     this.park = await this.clueService.getPark(this.game.park);
     this.clues = this.game.clueList;
-
   }
 
   foundClues(): Clue[] {

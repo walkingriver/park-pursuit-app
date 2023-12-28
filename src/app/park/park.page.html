@@ -18,11 +18,11 @@
             routerDirection="forward"
           >
             <img [src]="clueService.urlFromClue(clue)" class="polaroid" />
+            @if(clue.isFound) {
             <p>
-              <span *ngIf="clue.isFound"
-                >Found {{clue.dateFound | date: 'mediumDate' }}</span
-              >
+              <span>Found {{clue.dateFound | date: 'mediumDate' }}</span>
             </p>
+            }
           </a>
         </div>
       </ion-col>
