@@ -1,6 +1,4 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
 
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
@@ -12,7 +10,7 @@ import { IonicRouteStrategy, IonicModule } from '@ionic/angular';
 import { RouteReuseStrategy } from '@angular/router';
 
 if (environment.production) {
-  enableProdMode();
+    enableProdMode();
 }
 
 bootstrapApplication(AppComponent, {
@@ -28,4 +26,4 @@ bootstrapApplication(AppComponent, {
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     ]
 })
-  .catch(err => console.log(err));
+    .catch(err => console.log(err));
