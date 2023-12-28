@@ -9,13 +9,13 @@ import {
 } from '@ionic/angular';
 import { LocationType, DMS } from '../models/dms';
 import { CluesService } from '../clues.service';
-import * as exif from 'exif-js';
 import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Plugins, GeolocationPosition } from '@capacitor/core';
 import { DmsService } from '../dms.service';
 import { NgIf, DecimalPipe, DatePipe } from '@angular/common';
+import exifr from 'exifr' // to use ES Modules
 
 const { Geolocation } = Plugins;
 
@@ -49,7 +49,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
     private platform: Platform,
     private toastCtrl: ToastController,
     private zone: NgZone
-  ) {}
+  ) { }
 
   async ngOnInit() {
     await this.platform.ready();
@@ -62,7 +62,6 @@ export class ClueDetailPage implements OnInit, OnDestroy {
       console.log(this.clue);
     });
 
-    console.log('Loaded: ', exif);
     this.getCurrentPosition();
 
     if (!this.isProduction) {
@@ -138,11 +137,11 @@ export class ClueDetailPage implements OnInit, OnDestroy {
   }
 
   updatePosition(position: GeolocationPosition) {
-    var lat = DmsService.convertToDms(
+    const lat = DmsService.convertToDms(
       position.coords.latitude,
       LocationType.Latitude
     );
-    var long = DmsService.convertToDms(
+    const long = DmsService.convertToDms(
       position.coords.longitude,
       LocationType.Longitude
     );
@@ -155,43 +154,19 @@ export class ClueDetailPage implements OnInit, OnDestroy {
     this.isLocated = true;
   }
 
-  getGpsData(image): any {
-    return new Promise((resolve, reject) => {
-      exif.getData(image, function () {
-        var gpsExtracted = Coordinate.empty();
-        console.log(image);
-        var allMetaData = exif.getAllTags(this);
-        console.log(allMetaData);
+  async getGpsData(image): Promise<Coordinate> {
+    try {
+      const { latitude, longitude } = await exifr.gps(image);
 
-        gpsExtracted.latitude.degrees =
-          (1.0 * allMetaData.GPSLatitude[0].numerator) /
-          allMetaData.GPSLatitude[0].denominator;
-        gpsExtracted.latitude.minutes =
-          (1.0 * allMetaData.GPSLatitude[1].numerator) /
-          allMetaData.GPSLatitude[1].denominator;
-        gpsExtracted.latitude.seconds =
-          (1.0 * allMetaData.GPSLatitude[2].numerator) /
-          allMetaData.GPSLatitude[2].denominator;
-        gpsExtracted.latitude.direction = DMS.directionFromText(
-          allMetaData.GPSLatitudeRef
-        );
+      // Convert to DMS
+      const lat = DmsService.convertToDms(latitude, LocationType.Latitude);
+      const long = DmsService.convertToDms(longitude, LocationType.Longitude);
 
-        gpsExtracted.longitude.degrees =
-          (1.0 * allMetaData.GPSLongitude[0].numerator) /
-          allMetaData.GPSLongitude[0].denominator;
-        gpsExtracted.longitude.minutes =
-          (1.0 * allMetaData.GPSLongitude[1].numerator) /
-          allMetaData.GPSLongitude[1].denominator;
-        gpsExtracted.longitude.seconds =
-          (1.0 * allMetaData.GPSLongitude[2].numerator) /
-          allMetaData.GPSLongitude[2].denominator;
-        gpsExtracted.longitude.direction = DMS.directionFromText(
-          allMetaData.GPSLongitudeRef
-        );
-
-        resolve(gpsExtracted);
-      });
-    });
+      return new Coordinate(lat, long);
+    }
+    catch (e) {
+      return Coordinate.empty();
+    }
   }
 
   distance() {
