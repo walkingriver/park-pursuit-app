@@ -1,9 +1,11 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 
+
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { IonicStorageModule } from '@ionic/storage';
+import { Drivers } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
 import { AppRoutingModule } from './app/app-routing.module';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { IonicRouteStrategy, IonicModule } from '@ionic/angular';
@@ -16,7 +18,9 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
     providers: [
         importProvidersFrom(BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot({
-            name: 'park-pursuit', driverOrder: ['indexeddb', 'websql']
+            name: 'park-pursuit', driverOrder: [
+                Drivers.IndexedDB,
+                Drivers.LocalStorage]
         }), ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production,
             // Register the ServiceWorker as soon as the app is stable

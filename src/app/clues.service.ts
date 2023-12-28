@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import { Injectable, inject } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 import * as _ from 'lodash';
 import { Park } from './models/park';
 import { Clue } from './models/clue';
@@ -8,59 +8,65 @@ import { Clue } from './models/clue';
   providedIn: 'root',
 })
 export class CluesService {
-  private allParks: Park[];
+  private readonly ionStorage: Storage = inject(Storage);
+  storage: Storage | null = null;
+  private allParks: Park[] = [
+    {
+      code: 'ak',
+      name: 'Animal Kingdom',
+      imgSrc: this.imgFromPark('ak'),
+      disabled: false,
+    },
+    {
+      code: 'ioa',
+      name: 'Islands of Adventure',
+      imgSrc: this.imgFromPark('ioa'),
+      disabled: false,
+    },
+    {
+      code: 'mk',
+      name: 'Magic Kingdom',
+      imgSrc: this.imgFromPark('mk'),
+      disabled: false,
+    },
+    {
+      code: 'ec',
+      name: 'Epcot',
+      imgSrc: this.imgFromPark('ec'),
+      disabled: false,
+    },
+    {
+      code: 'st',
+      name: 'Hollywood Studios',
+      imgSrc: this.imgFromPark('st'),
+      disabled: false,
+    },
+    {
+      code: 'uso',
+      name: 'Universal Studios',
+      imgSrc: this.imgFromPark('uso'),
+      disabled: false,
+    },
+    {
+      code: 'byu',
+      name: 'BYU Provo',
+      imgSrc: this.imgFromPark('byu'),
+      disabled: false,
+    },
+    {
+      code: 'cfl',
+      name: 'Celebration FL',
+      imgSrc: this.imgFromPark('cfl'),
+      disabled: false,
+    },
+  ];
 
-  constructor(private storage: Storage) {
-    this.allParks = [
-      {
-        code: 'ak',
-        name: 'Animal Kingdom',
-        imgSrc: this.imgFromPark('ak'),
-        disabled: false,
-      },
-      {
-        code: 'ioa',
-        name: 'Islands of Adventure',
-        imgSrc: this.imgFromPark('ioa'),
-        disabled: false,
-      },
-      {
-        code: 'mk',
-        name: 'Magic Kingdom',
-        imgSrc: this.imgFromPark('mk'),
-        disabled: false,
-      },
-      {
-        code: 'ec',
-        name: 'Epcot',
-        imgSrc: this.imgFromPark('ec'),
-        disabled: false,
-      },
-      {
-        code: 'st',
-        name: 'Hollywood Studios',
-        imgSrc: this.imgFromPark('st'),
-        disabled: false,
-      },
-      {
-        code: 'uso',
-        name: 'Universal Studios',
-        imgSrc: this.imgFromPark('uso'),
-        disabled: false,
-      },
-      {
-        code: 'byu',
-        name: 'BYU Provo',
-        imgSrc: this.imgFromPark('byu'),
-        disabled: false,
-      },
-      {
-        code: 'cfl',
-        name: 'Celebration FL',
-        imgSrc: this.imgFromPark('cfl'),
-        disabled: false,
-      },
-    ];
+  constructor() {
+    this.init();
+  }
+
+  async init() {
+    this.storage = await this.ionStorage.create();
   }
 
   getParks(): Promise<Park[]> {
