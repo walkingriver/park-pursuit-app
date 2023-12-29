@@ -15,7 +15,10 @@ import { Subscription } from 'rxjs';
 import { Plugins, GeolocationPosition } from '@capacitor/core';
 import { DmsService } from '../dms.service';
 import { DecimalPipe, DatePipe } from '@angular/common';
-import exifr from 'exifr' // to use ES Modules
+import exifr from 'exifr'; // to use ES Modules
+
+import { addIcons } from 'ionicons';
+import { ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
 
 const { Geolocation } = Plugins;
 
@@ -49,10 +52,15 @@ export class ClueDetailPage implements OnInit, OnDestroy {
     private platform: Platform,
     private toastCtrl: ToastController,
     private zone: NgZone
-  ) { }
+  ) {
+  }
 
   async ngOnInit() {
     await this.platform.ready();
+
+    addIcons({
+      more: this.platform.is('ios') ? ellipsisHorizontal : ellipsisVertical,
+    })
 
     this.isProduction = environment.production;
 
@@ -163,8 +171,7 @@ export class ClueDetailPage implements OnInit, OnDestroy {
       const long = DmsService.convertToDms(longitude, LocationType.Longitude);
 
       return new Coordinate(lat, long);
-    }
-    catch (e) {
+    } catch (e) {
       return Coordinate.empty();
     }
   }

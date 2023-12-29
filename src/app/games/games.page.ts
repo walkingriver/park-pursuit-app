@@ -1,18 +1,20 @@
-import { Component, OnInit } from "@angular/core";
-import { Game } from "../models/game";
-import { Park } from "../models/park";
-import { ActivatedRoute, Router, RouterLink } from "@angular/router";
-import { CluesService } from "../clues.service";
-import { AlertController, IonicModule } from "@ionic/angular";
-import { GameService } from "../game.service";
-import { DatePipe } from "@angular/common";
+import { Component, OnInit } from '@angular/core';
+import { Game } from '../models/game';
+import { Park } from '../models/park';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CluesService } from '../clues.service';
+import { AlertController, IonicModule } from '@ionic/angular';
+import { GameService } from '../game.service';
+import { DatePipe } from '@angular/common';
+import { addIcons } from 'ionicons';
+import { alertCircle } from 'ionicons/icons';
 
 @Component({
-  selector: "app-games",
-  templateUrl: "./games.page.html",
-  styleUrls: ["./games.page.scss"],
+  selector: 'app-games',
+  templateUrl: './games.page.html',
+  styleUrls: ['./games.page.scss'],
   standalone: true,
-  imports: [IonicModule, RouterLink, DatePipe]
+  imports: [IonicModule, RouterLink, DatePipe],
 })
 export class GamesPage implements OnInit {
   games: Game[];
@@ -29,6 +31,10 @@ export class GamesPage implements OnInit {
   async ngOnInit() {
     this.games = await this.gameService.loadAll();
     this.parks = await this.clueService.getParks();
+
+    addIcons({
+      'alert-circle': alertCircle,
+    })
   }
 
   totalClues(game: Game): number {
@@ -50,7 +56,7 @@ export class GamesPage implements OnInit {
 
   parkName(game: Game) {
     if (!game) {
-      return "";
+      return '';
     }
 
     const park = this.park(game.park);
@@ -58,12 +64,12 @@ export class GamesPage implements OnInit {
       return park.name;
     }
 
-    return "Unknown Park";
+    return 'Unknown Park';
   }
 
   parkImage(game: Game) {
     if (!game) {
-      return "";
+      return '';
     }
 
     const park = this.park(game.park);
@@ -71,7 +77,7 @@ export class GamesPage implements OnInit {
       return park.imgSrc;
     }
 
-    return "";
+    return '';
   }
 
   park(id): Park {
@@ -90,21 +96,21 @@ export class GamesPage implements OnInit {
     let updatedGames: Game[]; // NEW CODE
 
     let alert = await this.alertCtrl.create({
-      header: "Confirm delete",
+      header: 'Confirm delete',
       message:
-        "Are you really sure you want to delete this game? This cannot be undone.",
+        'Are you really sure you want to delete this game? This cannot be undone.',
       buttons: [
         {
-          text: "Cancel",
-          role: "cancel",
+          text: 'Cancel',
+          role: 'cancel',
           handler: () => {
-            console.log("Cancel clicked");
+            console.log('Cancel clicked');
           },
         },
         {
-          text: "Delete",
+          text: 'Delete',
           handler: async () => {
-            console.log("Delete clicked");
+            console.log('Delete clicked');
             updatedGames = await this.gameService.delete(game.id); // CHANGE
           },
         },
