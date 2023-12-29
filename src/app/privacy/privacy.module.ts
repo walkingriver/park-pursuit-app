@@ -10,17 +10,17 @@ import { PrivacyPage } from './privacy.page';
 const routes: Routes = [
   {
     path: '',
-    component: PrivacyPage
-  }
+    component: PrivacyPage,
+  },
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        RouterModule.forChild(routes),
-        PrivacyPage
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RouterModule.forChild(routes),
+    PrivacyPage,
+  ],
 })
 export class PrivacyPageModule {}

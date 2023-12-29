@@ -7,11 +7,13 @@ import { Clue } from './models/clue';
 const GAMEPREFIX = 'pp-game';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GameService {
-  constructor(private clueService: CluesService, private storage: Storage) {
-  }
+  constructor(
+    private clueService: CluesService,
+    private storage: Storage
+  ) {}
 
   async save(game: Game): Promise<Game> {
     const dbKey = `${GAMEPREFIX}-${game.id}`;
@@ -29,8 +31,7 @@ export class GameService {
     const clues = await this.updateClues(game.clueList);
     game.clueList = clues
       .sort((a, b) => {
-        return +new Date(b.dateFound) -
-          +new Date(a.dateFound);
+        return +new Date(b.dateFound) - +new Date(a.dateFound);
       })
       .reverse();
     console.log('Game Loaded', JSON.stringify(game));
@@ -51,7 +52,9 @@ export class GameService {
   private updateClues(clues: Clue[]): Promise<Clue[]> {
     let updatedClues: Promise<Clue>[];
     if (clues) {
-      updatedClues = clues.map(c => this.clueService.getClue(c.parkCode, c.filename));
+      updatedClues = clues.map((c) =>
+        this.clueService.getClue(c.parkCode, c.filename)
+      );
     }
     return Promise.all(updatedClues);
   }

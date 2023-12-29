@@ -1,71 +1,71 @@
-
-  .container {
-      padding-bottom: 100%;
-      box-sizing: border-box;
-      perspective: 800px;
-      position: relative; // bottom: 25px;
-      width: 90%;
-      left: 5%;
+.container {
+  padding-bottom: 100%;
+  box-sizing: border-box;
+  perspective: 800px;
+  position: relative; // bottom: 25px;
+  width: 90%;
+  left: 5%;
+}
+.card {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  img {
+    width: 100%;
   }
-  .card {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      transform-style: preserve-3d;
-      transition: transform 1s;
-      img {
-          width: 100%;
-      }
-      p {
-          position: absolute;
-          text-align: center;
-          width: 90%;
-          left: 5%;
-          margin: 0;
-          color: #888;
-          line-height: 2;
-      }
-      figure {
-          background-color: #fff;
-          border: 10px solid #fff;
-          border-bottom: 45px solid #fff;
-          -webkit-box-shadow: 3px 3px 3px #777;
-          -moz-box-shadow: 3px 3px 3px #777;
-          box-shadow: 3px 3px 3px #777;
-          margin: 0;
-          display: block;
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          backface-visibility: hidden;
-          -webkit-backface-visibility: hidden;
-          -moz-backface-visibility: hidden;
-          -webkit-perspective: 0;
-          -webkit-backface-visibility: hidden;
-          -webkit-transform: translate3d(0,0,0);
-          visibility:visible;
-          backface-visibility: hidden;        }
-      figure.front {
-          backface-visibility: hidden;
-          -webkit-backface-visibility: hidden;
-      }
-      figure.back {
-          transform: rotateY( 180deg);
-          -webkit-transform: rotateY(180deg);
-          -moz-transform: rotateY(180deg);
-          background: #fff;  
-      }
+  p {
+    position: absolute;
+    text-align: center;
+    width: 90%;
+    left: 5%;
+    margin: 0;
+    color: #888;
+    line-height: 2;
   }
-  .card.flipped {
-      transform: rotateY(180deg);
-      -webkit-transform: rotateY(180deg);
-      -moz-transform: rotateY(180deg);
-      box-shadow: 0 15px 50px rgba(0,0,0,0.2);
-    }
-  .hint {
-      color: #333;
-      background-color: #eee;
-      padding: 5px;
-      position: fixed;
-      bottom: 40px;
+  figure {
+    background-color: #fff;
+    border: 10px solid #fff;
+    border-bottom: 45px solid #fff;
+    -webkit-box-shadow: 3px 3px 3px #777;
+    -moz-box-shadow: 3px 3px 3px #777;
+    box-shadow: 3px 3px 3px #777;
+    margin: 0;
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-perspective: 0;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    visibility: visible;
+    backface-visibility: hidden;
   }
+  figure.front {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  figure.back {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    background: #fff;
+  }
+}
+.card.flipped {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+}
+.hint {
+  color: #333;
+  background-color: #eee;
+  padding: 5px;
+  position: fixed;
+  bottom: 40px;
+}

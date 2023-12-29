@@ -1,10 +1,13 @@
-
 export enum Direction {
-  North, South, East, West
+  North,
+  South,
+  East,
+  West,
 }
 
 export enum LocationType {
-  Latitude, Longitude
+  Latitude,
+  Longitude,
 }
 
 export class DMS {
@@ -15,7 +18,9 @@ export class DMS {
 
   toString(): string {
     let dirLabel = Direction[this.direction][0]; // First charater of direction
-    return `${this.degrees}° ${this.minutes}' ${this.seconds.toFixed(2)}" ${dirLabel}`;
+    return `${this.degrees}° ${this.minutes}' ${this.seconds.toFixed(
+      2
+    )}" ${dirLabel}`;
   }
 
   asDecimal() {
@@ -23,11 +28,11 @@ export class DMS {
   }
 
   toRadians() {
-    return this.asDecimal() * Math.PI / 180;
+    return (this.asDecimal() * Math.PI) / 180;
   }
 
   toDegrees() {
-    return this.asDecimal() * 180 / Math.PI;
+    return (this.asDecimal() * 180) / Math.PI;
   }
 
   static empty(locType: LocationType): DMS {
@@ -35,7 +40,8 @@ export class DMS {
     dms.degrees = 0.0;
     dms.minutes = 0.0;
     dms.seconds = 0.0;
-    dms.direction = locType === LocationType.Latitude ? Direction.North : Direction.East;
+    dms.direction =
+      locType === LocationType.Latitude ? Direction.North : Direction.East;
     return dms;
   }
 
@@ -53,7 +59,7 @@ export class DMS {
   }
 
   static convertToDecimal(dms: DMS): number {
-    let result = dms.degrees + (dms.minutes / 60) + (dms.seconds / (60 * 60));
+    let result = dms.degrees + dms.minutes / 60 + dms.seconds / (60 * 60);
     if (dms.direction === Direction.South || dms.direction === Direction.West) {
       result = -result;
     }

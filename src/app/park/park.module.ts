@@ -10,17 +10,17 @@ import { ParkPage } from './park.page';
 const routes: Routes = [
   {
     path: '',
-    component: ParkPage
-  }
+    component: ParkPage,
+  },
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        RouterModule.forChild(routes),
-        ParkPage
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RouterModule.forChild(routes),
+    ParkPage,
+  ],
 })
 export class ParkPageModule {}

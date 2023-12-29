@@ -11,15 +11,14 @@ describe('new App', () => {
     beforeEach(() => {
       page.navigateTo('/games');
     });
-    it('should have a title saying Saved Games', () => {
-    });
+    it('should have a title saying Saved Games', () => {});
   });
   describe('New game', () => {
     beforeEach(() => {
       page.navigateTo('/new-game');
     });
     it('should have a title saying New Game', () => {
-      page.getPageOneTitleText().then(title => {
+      page.getPageOneTitleText().then((title) => {
         expect(title).toEqual('New Game');
       });
     });
@@ -45,7 +44,7 @@ describe('new App', () => {
       page.navigateTo('/clue/ak/6');
     });
   });
-  
+
   describe('USO', () => {
     it('should have a clue', () => {
       page.navigateTo('/clue/uso/29');

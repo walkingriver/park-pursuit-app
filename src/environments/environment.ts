@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   admob: {
     ios: 'ca-app-pub-3940256099942544/2934735716',
-    android: 'ca-app-pub-3940256099942544/6300978111'
-  }
+    android: 'ca-app-pub-3940256099942544/6300978111',
+  },
 };
 
 /*

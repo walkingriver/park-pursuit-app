@@ -10,16 +10,22 @@ export class AppPage {
   async takeScreenshot(destination: any) {
     const png = await browser.takeScreenshot();
     const deviceName = await this.getDeviceName();
-    const fileName = './screenshots/' + `${deviceName}/${destination}.png`.replace(/\//g, '-',);
+    const fileName =
+      './screenshots/' + `${deviceName}/${destination}.png`.replace(/\//g, '-');
     this.writeScreenShot(png, fileName);
   }
 
   async getDeviceName() {
     const config = await browser.getProcessedConfig();
     const capabilities = config.capabilities || {};
-    const chromeOptions = capabilities.chromeOptions || { mobileEmulation: { device: 'browser' } };
-    const mobileEmulation = chromeOptions.mobileEmulation || { device: 'browser' };
-    const deviceName = mobileEmulation.device || mobileEmulation.deviceName || 'unknown';
+    const chromeOptions = capabilities.chromeOptions || {
+      mobileEmulation: { device: 'browser' },
+    };
+    const mobileEmulation = chromeOptions.mobileEmulation || {
+      device: 'browser',
+    };
+    const deviceName =
+      mobileEmulation.device || mobileEmulation.deviceName || 'unknown';
     console.log('Test Device:', deviceName);
 
     return deviceName;
@@ -34,11 +40,13 @@ export class AppPage {
 
   getTitle() {
     return browser.getTitle();
-  }  
+  }
 
   getPageOneTitleText() {
-    return element(by.tagName('ion-app')).element(by.deepCss('ion-title')).getText();
-  }  
+    return element(by.tagName('ion-app'))
+      .element(by.deepCss('ion-title'))
+      .getText();
+  }
 
   getElementByCss(css: string) {
     return element(by.deepCss(css));

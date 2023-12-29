@@ -10,17 +10,17 @@ import { TermsPage } from './terms.page';
 const routes: Routes = [
   {
     path: '',
-    component: TermsPage
-  }
+    component: TermsPage,
+  },
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        RouterModule.forChild(routes),
-        TermsPage
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RouterModule.forChild(routes),
+    TermsPage,
+  ],
 })
 export class TermsPageModule {}

@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './park.page.html',
   styleUrls: ['./park.page.scss'],
   standalone: true,
-  imports: [IonicModule, RouterLink, DatePipe]
+  imports: [IonicModule, RouterLink, DatePipe],
 })
 export class ParkPage implements OnInit {
   public clueService = inject(CluesService);
@@ -25,7 +25,6 @@ export class ParkPage implements OnInit {
   game: Game = { park: '', clueList: [], foundClues: 0 };
   gameId: string;
 
-
   async ngOnInit() {
     await this.platform.ready();
 
@@ -37,10 +36,10 @@ export class ParkPage implements OnInit {
   }
 
   foundClues(): Clue[] {
-    return this.clues.filter(x => x.isFound);
+    return this.clues.filter((x) => x.isFound);
   }
 
   unfoundClues(): Clue[] {
-    return this.clues.filter(x => !x.isFound);
+    return this.clues.filter((x) => !x.isFound);
   }
 }

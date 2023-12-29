@@ -10,17 +10,17 @@ import { ProgressPage } from './progress.page';
 const routes: Routes = [
   {
     path: '',
-    component: ProgressPage
-  }
+    component: ProgressPage,
+  },
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        RouterModule.forChild(routes),
-        ProgressPage
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RouterModule.forChild(routes),
+    ProgressPage,
+  ],
 })
 export class ProgressPageModule {}

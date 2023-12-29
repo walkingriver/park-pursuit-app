@@ -5,7 +5,7 @@
   "npmClient": "npm",
   "webDir": "www",
   "plugins": {
-    "SplashScreen": { 
+    "SplashScreen": {
       "showSpinner": true
     }
   }
